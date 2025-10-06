@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useUserStore } from "@/lib/stores/UserStore";
+
+interface ChatMessage {
+  username: string;
+  message: string;
+}
 
 export const ChatComponents = () => {
-  const [messages, setMessages] = useState<string[]>([]);
+  const user = useUserStore((state) => state.user);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const wsRef = useRef<WebSocket | null>(null);
 
@@ -11,21 +18,19 @@ export const ChatComponents = () => {
     const ws = new WebSocket("ws://localhost:8080/chat");
     wsRef.current = ws;
 
-    ws.onopen = () => {
-      console.log("Connected with WebSocket");
-    };
+    ws.onopen = () => console.log("Connected with WebSocket");
 
     ws.onmessage = (event) => {
-      setMessages((prev) => [...prev, event.data]);
+      try {
+        const msg: ChatMessage = JSON.parse(event.data);
+        setMessages((prev) => [...prev, msg]);
+      } catch (err) {
+        console.error("Invalid message format:", event.data);
+      }
     };
 
-    ws.onclose = () => {
-      console.log("Disconnected with WebSocket");
-    };
-
-    ws.onerror = (err) => {
-      console.error("⚠️ Error WebSocket:", err);
-    };
+    ws.onclose = () => console.log("Disconnected with WebSocket");
+    ws.onerror = (err) => console.error("⚠️ WebSocket error:", err);
 
     return () => ws.close();
   }, []);
@@ -34,9 +39,14 @@ export const ChatComponents = () => {
     if (
       wsRef.current &&
       wsRef.current.readyState === WebSocket.OPEN &&
-      input.trim()
+      input.trim() &&
+      user
     ) {
-      wsRef.current.send(input);
+      const payload: ChatMessage = {
+        username: user.username,
+        message: input.trim(),
+      };
+      wsRef.current.send(JSON.stringify(payload));
       setInput("");
     }
   };
@@ -47,11 +57,12 @@ export const ChatComponents = () => {
 
       <div className="border p-3 h-64 overflow-y-auto bg-gray-50 rounded-lg shadow-inner">
         {messages.length === 0 && (
-          <p className="text-gray-400 text-sm">Brak wiadomości...</p>
+          <p className="text-black text-sm">Brak wiadomości...</p>
         )}
         {messages.map((msg, i) => (
-          <div key={i} className="p-1">
-            {msg}
+          <div key={i} className="p-1 text-black">
+            <strong className="text-red-500">{msg.username}:</strong>{" "}
+            {msg.message}
           </div>
         ))}
       </div>

@@ -1,33 +1,12 @@
-"use client";
+import ChatClient from "./ChatClient";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useUserStore } from "@/lib/stores/UserStore";
-import { ChatComponents } from "@/components/ChatComponent";
+export const dynamic = "force-dynamic";
 
 export default function ChatPage() {
-  const user = useUserStore((state) => state.user);
-  const clearUser = useUserStore((state) => state.clearUser);
-  const router = useRouter();
-
-  // redirect jeśli niezalogowany
-  useEffect(() => {
-    if (!user) router.push("/");
-  }, [user, router]);
-
-  if (!user) return null; // lub spinner/loading
-
-  const handleLogout = () => {
-    clearUser();
-    router.push("/");
-  };
-
   return (
-    <div>
-      <h1>Czat</h1>
-      <p>Zalogowany jako: {user.username}</p>
-      <button onClick={handleLogout}>Wyloguj</button>
-      <ChatComponents />
+    <div className="p-4 max-w-2xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Chat Room</h1>
+      <ChatClient />
     </div>
   );
 }

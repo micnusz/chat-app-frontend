@@ -30,7 +30,7 @@ export const ChatComponents = () => {
     };
 
     ws.onclose = () => console.log("Disconnected with WebSocket");
-    ws.onerror = (err) => console.error("⚠️ WebSocket error:", err);
+    ws.onerror = (err) => console.error("WebSocket error:", err);
 
     return () => ws.close();
   }, []);
@@ -57,7 +57,7 @@ export const ChatComponents = () => {
 
       <div className="border p-3 h-64 overflow-y-auto bg-gray-50 rounded-lg shadow-inner">
         {messages.length === 0 && (
-          <p className="text-black text-sm">Brak wiadomości...</p>
+          <p className="text-black text-sm">No messages...</p>
         )}
         {messages.map((msg, i) => (
           <div key={i} className="p-1 text-black">
@@ -75,6 +75,7 @@ export const ChatComponents = () => {
           placeholder="Napisz wiadomość..."
         />
         <button
+          type="submit"
           onClick={sendMessage}
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
         >

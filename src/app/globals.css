@@ -1,26 +1,149 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-roboto-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --table-header: var(--table-header);
+  --table-bg: var(--table-bg);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-table-row: var(--table-row);
+  --color-table-row-alt: var(--table-row-alt);
+  --color-table-row-hover: var(--table-row-hover);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+
+  /* Tło i tekst */
+  --background: oklch(0.1206 0.003 270); /* Wyblakły czarny */
+  --foreground: oklch(0.95 0 0); /* Jasny tekst */
+
+  /* Karty i popovery */
+  --card: oklch(0.1506 0.003 270);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.1506 0.003 270);
+  --popover-foreground: oklch(0.95 0 0);
+
+  /* Kolory akcentujące */
+  --primary: oklch(0.4 0.05 120);
+  --primary-foreground: oklch(0.95 0 0);
+  --secondary: oklch(0.4 0.05 60);
+  --secondary-foreground: oklch(0.95 0 0);
+  --accent: oklch(0.2206 0.003 270);
+  --accent-foreground: oklch(0.95 0 0);
+
+  /* Kolory informacyjne */
+  --muted: oklch(0.206 0.003 270); /* Stonowany szary */
+  --muted-foreground: oklch(0.6 0.01 270);
+  --destructive: oklch(0.6 0.1 20); /* Ceglasty czerwony */
+
+  /* Obramowania i pierścienie */
+  --border: oklch(0.2395 0.005 270);
+  --input: oklch(0.2395 0.005 270);
+  --ring: oklch(0.4 0.05 120);
+  --chart-1: oklch(0.4 0.05 120); /* Oliwkowa zieleń */
+  --chart-2: oklch(0.5574 0.05 120); /* Beżowy */
+  --chart-3: oklch(0.65 0.15 30); /* Rdzawy pomarańcz */
+  --chart-4: oklch(0.4 0.05 270); /* Stonowany szary */
+
+  /* Table */
+  --table-row: oklch(0.1503 0.005 270); /* Ciemniejszy fioletowy szary */
+  --table-row-alt: oklch(
+    0.169 0.005 270
+  ); /* Lekko jaśniejszy dla naprzemiennych wierszy */
+  --table-row-hover: oklch(0.25 0.015 270);
+
+  /* Pasek boczny */
+  --sidebar: oklch(0.15 0.01 270);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.35 0.05 120);
+  --sidebar-primary-foreground: oklch(0.95 0 0);
+  --sidebar-accent: oklch(0.5 0.1 30);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.176 0.01 270);
+  --sidebar-ring: oklch(0.4 0.05 120);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.px-fluid {
+  padding-left: clamp(0.25rem, 3vw + 0.5rem, 5rem);
+  padding-right: clamp(0.25rem, 3vw + 0.5rem, 5rem);
+}
+
+.py-fluid {
+  padding-top: clamp(0.5rem, 5vw + 0.5rem, 1rem);
+  padding-bottom: clamp(0.5rem, 5vw + 0.5rem, 1rem);
+}
+
+.label {
+  color: var(--muted-foreground);
+  font-size: small;
+}
+
+.responsive-user {
+  width: clamp(8rem, 15vw, 20rem);
+  height: clamp(8rem, 15vw, 20rem);
+  border-radius: 50%;
+  border: 6px solid var(--muted-foreground);
+}
+
+.responsive-h1 {
+  font-weight: 800;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  letter-spacing: -0.025em;
+  scroll-margin-top: 5rem;
+}
+
+.responsive-h2 {
+  scroll-margin-top: 5rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-size: clamp(1rem, 4vw, 1.25rem);
+}
+
+.container-padding {
+  padding-inline: clamp(1rem, 2vw, 12rem);
+  padding-block: clamp(1rem, 2vw, 12rem);
 }

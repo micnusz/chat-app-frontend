@@ -1,37 +1,26 @@
+import api from "./apiClient";
 import { UserRequestDTO, UserResponseDTO } from "./types";
 
-const API_URL = "http://localhost:8080/api/users";
-
-export async function registerUser(
-  payload: UserRequestDTO
-): Promise<UserResponseDTO> {
-  const res = await fetch(`${API_URL}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.error || "Nie udało się zarejestrować");
-  }
-
-  return res.json();
+export interface AuthResponse {
+  user: UserResponseDTO;
+  token: string;
 }
 
 export async function loginUser(
   payload: UserRequestDTO
-): Promise<UserResponseDTO> {
-  const res = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+): Promise<AuthResponse> {
+  const { data } = await api.post<AuthResponse>("/api/users/login", payload);
+  return data;
+}
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.error || "Nie udało się zalogować");
-  }
+export async function registerUser(
+  payload: UserRequestDTO
+): Promise<AuthResponse> {
+  const { data } = await api.post<AuthResponse>("/api/users/register", payload);
+  return data;
+}
 
-  return res.json();
+export async function getProtectedData() {
+  const { data } = await api.get("/api/secure/data");
+  return data;
 }

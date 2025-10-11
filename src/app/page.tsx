@@ -1,9 +1,13 @@
-"use server";
+// app/page.tsx
+import UserForm from "../components/UserForm";
 
-export default async function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default function HomePage() {
   return (
-    <div>
-      <h1>/chat</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold">Welcome to Chat App</h1>
+      <UserForm />
     </div>
   );
 }

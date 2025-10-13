@@ -1,5 +1,4 @@
 "use client";
-
 import ChatMessages from "@/components/ChatMessages";
 import ChatInput from "@/components/ChatInput";
 import { useChat } from "@/lib/hooks/useChat";

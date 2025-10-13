@@ -9,14 +9,7 @@ export interface ChatMessage {
 export function useChat() {
   const { token, user } = useUserStore();
   const wsRef = useRef<WebSocket | null>(null);
-
-  // Wczytanie wiadomości z sessionStorage
-  const initialMessages: ChatMessage[] = (() => {
-    const saved = sessionStorage.getItem("chatMessages");
-    return saved ? JSON.parse(saved) : [];
-  })();
-
-  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   useEffect(() => {
     if (!token || !user) return;
@@ -32,11 +25,7 @@ export function useChat() {
 
         // ignoruj wiadomości od siebie, żeby nie dublować
         if (msg.username !== user.username) {
-          setMessages((prev) => {
-            const updated = [...prev, msg];
-            sessionStorage.setItem("chatMessages", JSON.stringify(updated));
-            return updated;
-          });
+          setMessages((prev) => [...prev, msg]);
         }
       } catch {
         console.error("Invalid message format", event.data);
@@ -51,14 +40,10 @@ export function useChat() {
   const sendMessage = (text: string) => {
     if (wsRef.current?.readyState === WebSocket.OPEN && user) {
       const payload: ChatMessage = { username: user.username, message: text };
-      wsRef.current.send(JSON.stringify(payload));
+      wsRef.current.send(text);
 
-      // zapisujemy lokalnie od razu
-      setMessages((prev) => {
-        const updated = [...prev, payload];
-        sessionStorage.setItem("chatMessages", JSON.stringify(updated));
-        return updated;
-      });
+      // od razu dodajemy do listy, żeby pokazać w UI
+      setMessages((prev) => [...prev, payload]);
     }
   };
 

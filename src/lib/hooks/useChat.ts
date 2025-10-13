@@ -1,4 +1,7 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { useUserStore } from "@/lib/stores/UserStore";
 
 export interface ChatMessage {
@@ -11,6 +14,31 @@ export function useChat() {
   const wsRef = useRef<WebSocket | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
+  // Pobierz historię wiadomości z backendu
+  useEffect(() => {
+    if (!token) return;
+
+    const fetchMessages = async () => {
+      try {
+        const res = await axios.get("/api/messages/default-room", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const chatMessages: ChatMessage[] = res.data.map((m: any) => ({
+          username: m.sender.username,
+          message: m.content,
+        }));
+
+        setMessages(chatMessages);
+      } catch (err) {
+        console.error("Failed to fetch chat messages:", err);
+      }
+    };
+
+    fetchMessages();
+  }, [token]);
+
+  // WebSocket do nowych wiadomości
   useEffect(() => {
     if (!token || !user) return;
 
@@ -18,12 +46,11 @@ export function useChat() {
     wsRef.current = ws;
 
     ws.onopen = () => console.log("Connected to chat");
-
     ws.onmessage = (event) => {
       try {
         const msg: ChatMessage = JSON.parse(event.data);
 
-        // ignoruj wiadomości od siebie, żeby nie dublować
+        // Ignoruj własne wiadomości, żeby nie dublować
         if (msg.username !== user.username) {
           setMessages((prev) => [...prev, msg]);
         }
@@ -40,9 +67,9 @@ export function useChat() {
   const sendMessage = (text: string) => {
     if (wsRef.current?.readyState === WebSocket.OPEN && user) {
       const payload: ChatMessage = { username: user.username, message: text };
-      wsRef.current.send(text);
+      wsRef.current.send(JSON.stringify(payload));
 
-      // od razu dodajemy do listy, żeby pokazać w UI
+      // Dodaj własną wiadomość lokalnie od razu
       setMessages((prev) => [...prev, payload]);
     }
   };

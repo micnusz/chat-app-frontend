@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useUserStore } from "@/lib/stores/UserStore";
 import api from "@/lib/apiClient";
 
 interface CreateRoomFormProps {
@@ -8,6 +9,7 @@ interface CreateRoomFormProps {
 }
 
 export default function CreateRoomForm({ onRoomCreated }: CreateRoomFormProps) {
+  const { user } = useUserStore();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,6 +17,12 @@ export default function CreateRoomForm({ onRoomCreated }: CreateRoomFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!user) {
+      setMessage("Musisz być zalogowany, aby utworzyć pokój.");
+      return;
+    }
+
     setLoading(true);
     setMessage("");
 
@@ -36,6 +44,13 @@ export default function CreateRoomForm({ onRoomCreated }: CreateRoomFormProps) {
       setLoading(false);
     }
   };
+
+  // Jeśli użytkownik nie jest zalogowany, wyświetlamy komunikat zamiast formularza
+  if (!user) {
+    return (
+      <p className="text-red-500">Musisz być zalogowany, aby utworzyć pokój.</p>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-sm">

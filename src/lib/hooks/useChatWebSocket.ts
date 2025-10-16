@@ -4,11 +4,21 @@ import { useEffect, useRef } from "react";
 import { useUserStore } from "@/lib/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChatMessage } from "../types";
+import { useMessages } from "./useMessages";
 
 export function useChatWebSocket(roomId: number) {
   const { token, user } = useUserStore();
   const wsRef = useRef<WebSocket | null>(null);
   const queryClient = useQueryClient();
+
+  const { data: messagesFromDB = [] } = useMessages(roomId);
+
+  useEffect(() => {
+    queryClient.setQueryData<ChatMessage[]>(
+      ["chat-messages", roomId],
+      messagesFromDB
+    );
+  }, [messagesFromDB, roomId, queryClient]);
 
   useEffect(() => {
     if (!token || !user || !roomId) return;
@@ -36,6 +46,7 @@ export function useChatWebSocket(roomId: number) {
     return () => ws.close();
   }, [token, user, roomId, queryClient]);
 
+  // 3️⃣ Funkcja wysyłania wiadomości
   const sendMessage = (content: string) => {
     if (wsRef.current?.readyState === WebSocket.OPEN && user) {
       const payload: Partial<ChatMessage> = {
@@ -45,6 +56,7 @@ export function useChatWebSocket(roomId: number) {
       };
       wsRef.current.send(JSON.stringify(payload));
 
+      // od razu dopisz lokalnie
       queryClient.setQueryData<ChatMessage[]>(
         ["chat-messages", roomId],
         (old) => [...(old ?? []), payload as ChatMessage]

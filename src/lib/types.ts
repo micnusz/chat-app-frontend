@@ -30,3 +30,10 @@ export type ErrorResponse = {
   message: string;
   errorCode?: string;
 };
+
+export type ChatMessage = {
+  id: number;
+  username: string;
+  content: string;
+  roomId: number;
+};

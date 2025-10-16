@@ -20,7 +20,7 @@ export default function ChatRoomList() {
   };
 
   return (
-    <div className="space-y-2 max-w-md mx-auto">
+    <div className="space-y-2 ">
       {rooms?.map((room) => (
         <div
           key={room.id}

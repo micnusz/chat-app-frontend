@@ -57,44 +57,47 @@ export default function CreateRoomForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-sm">
-      <input
-        type="text"
-        placeholder="Room name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        className="border p-2 rounded"
-      />
-      <input
-        type="password"
-        placeholder="Password (optional)"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 rounded"
-      />
-      <button
-        type="submit"
-        disabled={isPending}
-        className="bg-blue-500 text-white p-2 rounded disabled:opacity-50"
-      >
-        {isPending ? "Creating..." : "Create Room"}
-      </button>
+    <div className="flex flex-col gap-y-2">
+      <h1>Create room:</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-sm">
+        <input
+          type="text"
+          placeholder="Room name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className="border p-2 rounded"
+        />
+        <input
+          type="password"
+          placeholder="Password (optional)"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <button
+          type="submit"
+          disabled={isPending}
+          className="bg-blue-500 text-white p-2 rounded disabled:opacity-50"
+        >
+          {isPending ? "Creating..." : "Create Room"}
+        </button>
 
-      {message && <p className="text-sm mt-1">{message}</p>}
+        {message && <p className="text-sm mt-1">{message}</p>}
 
-      {isError && (
-        <p className="text-red-500">
-          {(error as AxiosError<{ message?: string }>)?.response?.data
-            ?.message ?? error.message}
-        </p>
-      )}
+        {isError && (
+          <p className="text-red-500">
+            {(error as AxiosError<{ message?: string }>)?.response?.data
+              ?.message ?? error.message}
+          </p>
+        )}
 
-      {isSuccess && !message && (
-        <p className="text-green-600">
-          Room `&quot;`{data?.name}`&quot;` has been created!
-        </p>
-      )}
-    </form>
+        {isSuccess && !message && (
+          <p className="text-green-600">
+            Room `&quot;`{data?.name}`&quot;` has been created!
+          </p>
+        )}
+      </form>
+    </div>
   );
 }

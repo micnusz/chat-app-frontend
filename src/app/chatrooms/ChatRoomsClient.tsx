@@ -5,8 +5,7 @@ import CreateRoomForm from "@/components/CreateRoomForm";
 
 export const ChatRoomsClient = () => {
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Twoje pokoje</h1>
+    <div className="py-4 px-12 flex flex-col gap-y-12">
       <CreateRoomForm />
       <ChatRoomList />
     </div>

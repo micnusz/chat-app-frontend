@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 interface ChatInputProps {
   onSend: (msg: string) => void;
@@ -14,8 +16,8 @@ export default function ChatInput({ onSend }: ChatInputProps) {
   };
 
   return (
-    <div className="flex gap-2">
-      <input
+    <div className="flex gap-2 max-w-[40rem]">
+      <Input
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -23,12 +25,9 @@ export default function ChatInput({ onSend }: ChatInputProps) {
         className="flex-1 border rounded p-2"
         onKeyDown={(e) => e.key === "Enter" && handleSend()}
       />
-      <button
-        onClick={handleSend}
-        className="bg-blue-500 text-white px-4 rounded"
-      >
+      <Button onClick={handleSend} className="bg-blue-500 text-white" size="sm">
         Send
-      </button>
+      </Button>
     </div>
   );
 }

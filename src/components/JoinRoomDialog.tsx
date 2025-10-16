@@ -2,20 +2,25 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import api from "@/lib/apiClient";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { useJoinRoom } from "@/lib/hooks/useJoinRoom";
+import { AxiosError } from "axios";
 
 interface JoinRoomDialogProps {
-  room: { id: number; name: string; password?: string };
+  room: {
+    id: number;
+    name: string;
+    password?: string;
+    requiresPassword?: boolean;
+  };
   open: boolean;
   onClose: () => void;
 }
@@ -26,51 +31,55 @@ export default function JoinRoomDialog({
   onClose,
 }: JoinRoomDialogProps) {
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
-  const handleJoin = async () => {
-    setLoading(true);
-    setError("");
+  const { mutate: joinRoom } = useJoinRoom(room.id);
 
-    try {
-      await api.post(`/api/chat/rooms/${room.id}/join`, { password });
-      onClose();
-      router.push(`/chatrooms/${room.id}`);
-    } catch (err: any) {
-      setError(
-        err.response?.data?.message || "Nie udało się dołączyć do pokoju"
-      );
-    } finally {
-      setLoading(false);
-    }
+  const handleJoin = () => {
+    setErrorMessage("");
+
+    joinRoom(
+      { password },
+      {
+        onSuccess: () => {
+          onClose();
+          router.push(`/chatrooms/${room.id}`);
+        },
+        onError: (err: AxiosError<{ message?: string }>) => {
+          setErrorMessage(
+            err.response?.data?.message || "Failed to join the room."
+          );
+        },
+      }
+    );
   };
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
-          <DialogTitle>Dołącz do pokoju {room.name}</DialogTitle>
+          <DialogTitle>Join room: {room.name}</DialogTitle>
         </DialogHeader>
 
         {room.requiresPassword && (
-          <div className="my-4">
+          <div className="my-4 flex flex-col gap-y-1">
+            <span className="text-xs text-muted-foreground">Password:</span>
             <Input
               type="password"
-              placeholder="Hasło"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
         )}
 
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+        {errorMessage && (
+          <p className="text-red-500 text-sm mb-2">{errorMessage}</p>
+        )}
 
         <DialogFooter>
-          <Button onClick={handleJoin} disabled={loading}>
-            {loading ? "Dołączanie..." : "Dołącz"}
-          </Button>
+          <Button onClick={handleJoin}>Join</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

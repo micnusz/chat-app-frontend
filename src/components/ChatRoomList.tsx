@@ -1,47 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import api from "@/lib/apiClient";
+import { useState } from "react";
 import JoinRoomDialog from "./JoinRoomDialog";
-
-interface Room {
-  id: number;
-  name: string;
-  password?: string;
-}
+import { useChatList } from "@/lib/hooks/useChatList";
+import { Button } from "./ui/button";
+import { ChatRoom } from "@/lib/types";
 
 export default function ChatRoomList() {
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { data: rooms, isLoading, error } = useChatList();
 
-  useEffect(() => {
-    const fetchRooms = async () => {
-      const res = await api.get("/api/chat/rooms");
-      setRooms(res.data);
-    };
-    fetchRooms();
-  }, []);
+  if (isLoading) return <p>Fetching list...</p>;
+  if (error) return <p>Error: {(error as Error).message}</p>;
 
-  const handleJoinClick = (room: Room) => {
+  const handleJoinClick = (room: ChatRoom) => {
     setSelectedRoom(room);
     setDialogOpen(true);
   };
 
   return (
     <div className="space-y-2 max-w-md mx-auto">
-      {rooms.map((room) => (
+      {rooms?.map((room) => (
         <div
           key={room.id}
           className="flex justify-between items-center p-2 border rounded"
         >
           <span>{room.name}</span>
-          <button
+          <Button
             className="bg-blue-500 text-white px-2 py-1 rounded"
             onClick={() => handleJoinClick(room)}
           >
-            Dołącz
-          </button>
+            Join
+          </Button>
         </div>
       ))}
 

@@ -3,12 +3,10 @@ export type User = {
   id: string;
 };
 
-// Dane przychodzące w requestach
 export type UserRequestDTO = {
   username: string;
 };
 
-// Dane wysyłane do frontendu
 export type UserResponseDTO = {
   id: number;
   username: string;
@@ -20,4 +18,15 @@ export type ChatRoom = {
   createdBy: string;
   createdAt: string | null;
   password?: string;
+  requiresPassword?: boolean;
+};
+
+export type CreateRoomData = {
+  name: string;
+  password?: string;
+};
+
+export type ErrorResponse = {
+  message: string;
+  errorCode?: string;
 };

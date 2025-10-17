@@ -1,45 +1,33 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
-import { useUserStore } from "@/lib/stores/UserStore";
-import { loginUser, registerUser } from "@/lib/api";
 import { Button } from "./ui/button";
+import { useLoginUser } from "@/lib/hooks/useLoginUser";
+import { useRegisterUser } from "@/lib/hooks/useRegisterUser";
 
 export default function UserForm() {
   const [username, setUsername] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState<"login" | "register">("login"); // default login
-  const setAuth = useUserStore((s) => s.setAuth);
-  const router = useRouter();
+  const [mode, setMode] = useState<"login" | "register">("login");
 
-  const handleSubmit = async (e: FormEvent) => {
+  const loginMutation = useLoginUser();
+  const registerMutation = useRegisterUser();
+  const mutation = mode === "login" ? loginMutation : registerMutation;
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const payload = { username };
-      const data =
-        mode === "login"
-          ? await loginUser(payload)
-          : await registerUser(payload);
-
-      setAuth(data.user, data.token);
-      router.push("/chat");
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    mutation.mutate({ username });
   };
+
+  const isLoading = mutation.isPending;
+  const errorMessage =
+    mutation.error?.response?.data?.message || "Unexpected error occurred";
 
   return (
     <div className="flex flex-col items-center mt-24">
       <h2 className="text-xl font-bold mb-4">
         {mode === "login" ? "Sign in" : "Register"}
       </h2>
+
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-64">
         <input
           type="text"
@@ -49,8 +37,9 @@ export default function UserForm() {
           required
           className="border rounded p-2"
         />
-        <Button type="submit" disabled={loading}>
-          {loading
+
+        <Button type="submit" disabled={isLoading}>
+          {isLoading
             ? mode === "login"
               ? "Signing in..."
               : "Registering..."
@@ -58,10 +47,12 @@ export default function UserForm() {
             ? "Sign in"
             : "Register"}
         </Button>
-        {error && <div className="text-red-500">{error}</div>}
+
+        {mutation.isError && (
+          <div className="text-red-500 text-sm">{errorMessage}</div>
+        )}
       </form>
 
-      {/* Toggle button */}
       <button
         onClick={() => setMode(mode === "login" ? "register" : "login")}
         className="mt-4 text-sm text-blue-500 underline"

@@ -12,6 +12,16 @@ export type UserResponseDTO = {
   username: string;
 };
 
+export type RegisterResponse = {
+  user: UserResponseDTO;
+  token: string;
+};
+
+export type LoginResponse = {
+  user: UserResponseDTO;
+  token: string;
+};
+
 export type ChatRoom = {
   id: number;
   name: string;

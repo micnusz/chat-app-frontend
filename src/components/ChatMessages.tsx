@@ -17,6 +17,8 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
         ) : (
           messages.map((msg, idx) => {
             const isMine = msg.username === user?.username;
+            const isSystem = msg.username === "System";
+
             return (
               <div
                 key={idx}
@@ -24,12 +26,14 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
               >
                 <div
                   className={`px-3 py-2 rounded-lg max-w-xs break-words ${
-                    isMine
+                    isSystem
+                      ? "bg-gray-200 text-gray-800 italic"
+                      : isMine
                       ? "bg-blue-500 text-white rounded-br-none"
                       : "bg-gray-300 text-background rounded-bl-none"
                   }`}
                 >
-                  {!isMine && <strong>{msg.username}: </strong>}
+                  {!isMine && !isSystem && <strong>{msg.username}: </strong>}
                   {msg.content}
                 </div>
               </div>

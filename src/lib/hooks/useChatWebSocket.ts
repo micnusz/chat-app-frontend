@@ -10,6 +10,7 @@ export function useChatWebSocket(roomId: number) {
   const { token, user } = useUserStore();
   const wsRef = useRef<WebSocket | null>(null);
   const queryClient = useQueryClient();
+  const mountedRef = useRef(false);
 
   const { data: messagesFromDB = [] } = useMessages(roomId);
 
@@ -22,6 +23,9 @@ export function useChatWebSocket(roomId: number) {
 
   useEffect(() => {
     if (!token || !user || !roomId) return;
+
+    if (mountedRef.current) return; // ignoruj drugie wywołanie w Strict Mode
+    mountedRef.current = true;
 
     const ws = new WebSocket(
       `ws://localhost:8080/chat/${roomId}?token=${token}`
@@ -43,10 +47,12 @@ export function useChatWebSocket(roomId: number) {
 
     ws.onclose = () => console.log(`Disconnected from chat room ${roomId}`);
 
-    return () => ws.close();
+    return () => {
+      ws.close();
+      mountedRef.current = false; // reset przy unmount
+    };
   }, [token, user, roomId, queryClient]);
 
-  // 3️⃣ Funkcja wysyłania wiadomości
   const sendMessage = (content: string) => {
     if (wsRef.current?.readyState === WebSocket.OPEN && user) {
       const payload: Partial<ChatMessage> = {
@@ -56,7 +62,6 @@ export function useChatWebSocket(roomId: number) {
       };
       wsRef.current.send(JSON.stringify(payload));
 
-      // od razu dopisz lokalnie
       queryClient.setQueryData<ChatMessage[]>(
         ["chat-messages", roomId],
         (old) => [...(old ?? []), payload as ChatMessage]

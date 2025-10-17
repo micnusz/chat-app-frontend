@@ -12,5 +12,6 @@ export function useMessages(roomId: number) {
       return res.data;
     },
     staleTime: 1000 * 10,
+    enabled: !!roomId,
   });
 }

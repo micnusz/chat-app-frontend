@@ -25,7 +25,6 @@ api.interceptors.response.use(
       console.warn("Session expired. User logged out.");
     }
 
-    // Extract message from ErrorResponseDTO
     const message = error.response?.data?.message || "An error occurred";
     return Promise.reject(new Error(message));
   }

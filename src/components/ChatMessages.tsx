@@ -26,7 +26,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
                   className={`px-3 py-2 rounded-lg max-w-xs break-words ${
                     isMine
                       ? "bg-blue-500 text-white rounded-br-none"
-                      : "bg-gray-300 text-red-200 rounded-bl-none"
+                      : "bg-gray-300 text-background rounded-bl-none"
                   }`}
                 >
                   {!isMine && <strong>{msg.username}: </strong>}

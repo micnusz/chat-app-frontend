@@ -3,16 +3,21 @@
 import { Button } from "./ui/button";
 import { useDeleteChatRoom } from "@/lib/hooks/useDeleteChatRoom";
 import { useLeaveRoom } from "@/lib/hooks/useLeaveRoom";
+import { useUserStore } from "@/lib/stores/UserStore";
 
 type ChatRoomNavigationProps = {
   roomId: number;
+  createdBy: string;
   onClose?: () => void;
 };
 
 export default function ChatRoomNavigation({
   roomId,
+  createdBy,
   onClose,
 }: ChatRoomNavigationProps) {
+  const { user } = useUserStore();
+
   const {
     mutate: deleteRoom,
     isError: deleteError,
@@ -42,7 +47,6 @@ export default function ChatRoomNavigation({
     leaveRoom(undefined, {
       onSuccess: () => {
         if (onClose) onClose();
-        // router.push("/chatrooms") jest już w hooku
       },
       onError: (err) => {
         console.error(
@@ -58,9 +62,11 @@ export default function ChatRoomNavigation({
         Exit
       </Button>
 
-      <Button variant="destructive" onClick={handleDelete}>
-        Delete Room
-      </Button>
+      {user?.username === createdBy && (
+        <Button variant="destructive" onClick={handleDelete}>
+          Delete Room
+        </Button>
+      )}
 
       {deleteError && (
         <div className="text-red-500 text-sm">

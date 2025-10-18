@@ -5,12 +5,14 @@ import { useUserStore } from "@/lib/stores/UserStore";
 import { useCreateRoom } from "@/lib/hooks/useCreateRoom";
 import { AxiosError } from "axios";
 import { ChatRoom } from "@/lib/types";
+import { chatRoomSchema } from "@/lib/validation/chatRoomSchema";
 
 export default function CreateRoomForm() {
   const { user } = useUserStore();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const {
     mutate: createRoom,
@@ -21,14 +23,20 @@ export default function CreateRoomForm() {
     data,
   } = useCreateRoom();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
 
     if (!user) {
       setMessage("You must be logged in to create a room.");
       return;
     }
 
+    const result = chatRoomSchema.safeParse({ name, password });
+    if (!result.success) {
+      setValidationError(result.error.issues[0].message);
+      return;
+    }
+    setValidationError(null);
     setMessage("");
 
     createRoom(
@@ -75,6 +83,11 @@ export default function CreateRoomForm() {
           onChange={(e) => setPassword(e.target.value)}
           className="border p-2 rounded"
         />
+
+        {validationError && (
+          <p className="text-red-500 text-sm">{validationError}</p>
+        )}
+
         <button
           type="submit"
           disabled={isPending}

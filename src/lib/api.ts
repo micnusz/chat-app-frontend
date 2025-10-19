@@ -19,8 +19,3 @@ export async function registerUser(
   const { data } = await api.post<AuthResponse>("/api/users/register", payload);
   return data;
 }
-
-export async function getProtectedData() {
-  const { data } = await api.get("/api/secure/data");
-  return data;
-}

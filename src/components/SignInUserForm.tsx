@@ -3,19 +3,25 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Input } from "./ui/input";
 import { useLoginUser } from "@/lib/hooks/useLoginUser";
 import { userSchema } from "@/lib/validation/userSchema";
-import { Input } from "./ui/input";
 import { useUserStore } from "@/lib/stores/UserStore";
+import { AxiosError } from "axios";
+import { ErrorResponse } from "@/lib/types";
 
 export default function SignInUserForm() {
   const [username, setUsername] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const router = useRouter();
+  const token = useUserStore((s) => s.token);
+  const setAuth = useUserStore((s) => s.setAuth);
+
   const loginMutation = useLoginUser();
 
-  const setAuth = useUserStore((s) => s.setAuth);
-  const token = useUserStore((s) => s.token);
+  useEffect(() => {
+    if (token) router.push("/chatrooms");
+  }, [token, router]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -27,6 +33,7 @@ export default function SignInUserForm() {
     }
 
     setValidationError(null);
+
     loginMutation.mutate(
       { username },
       {
@@ -37,13 +44,13 @@ export default function SignInUserForm() {
     );
   };
 
-  useEffect(() => {
-    if (token) router.push("/chatrooms");
-  }, [token, router]);
+  const isLoading = loginMutation.isLoading;
 
-  const isLoading = loginMutation.isPending;
   const errorMessage =
-    loginMutation.error?.response?.data?.message || "Unexpected error occurred";
+    (loginMutation.error as AxiosError<ErrorResponse>)?.response?.data
+      ?.message ||
+    (loginMutation.error as AxiosError)?.message ||
+    null;
 
   return (
     <div className="flex flex-col items-center mt-24">
@@ -61,7 +68,7 @@ export default function SignInUserForm() {
         {validationError && (
           <div className="text-red-500 text-sm">{validationError}</div>
         )}
-        {loginMutation.isError && (
+        {errorMessage && (
           <div className="text-red-500 text-sm">{errorMessage}</div>
         )}
 

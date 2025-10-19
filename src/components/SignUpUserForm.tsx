@@ -1,16 +1,27 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Input } from "./ui/input";
 import { useRegisterUser } from "@/lib/hooks/useRegisterUser";
 import { userSchema } from "@/lib/validation/userSchema";
-import { Input } from "./ui/input";
+import { useUserStore } from "@/lib/stores/UserStore";
+import { AxiosError } from "axios";
+import { ErrorResponse } from "@/lib/types";
 
 export default function SignUpUserForm() {
   const [username, setUsername] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
+  const router = useRouter();
+  const token = useUserStore((s) => s.token);
+  const setAuth = useUserStore((s) => s.setAuth);
 
   const registerMutation = useRegisterUser();
+
+  useEffect(() => {
+    if (token) router.push("/chatrooms");
+  }, [token, router]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -22,13 +33,23 @@ export default function SignUpUserForm() {
     }
 
     setValidationError(null);
-    registerMutation.mutate({ username });
+
+    registerMutation.mutate(
+      { username },
+      {
+        onSuccess: (data) => {
+          setAuth(data.user, data.token);
+        },
+      }
+    );
   };
 
-  const isLoading = registerMutation.isPending;
+  const isLoading = registerMutation.isLoading;
   const errorMessage =
-    registerMutation.error?.response?.data?.message ||
-    "Unexpected error occurred";
+    (registerMutation.error as AxiosError<ErrorResponse>)?.response?.data
+      ?.message ||
+    (registerMutation.error as AxiosError)?.message ||
+    null;
 
   return (
     <div className="flex flex-col items-center mt-24">
@@ -46,7 +67,7 @@ export default function SignUpUserForm() {
         {validationError && (
           <div className="text-red-500 text-sm">{validationError}</div>
         )}
-        {registerMutation.isError && (
+        {errorMessage && (
           <div className="text-red-500 text-sm">{errorMessage}</div>
         )}
 
@@ -54,6 +75,15 @@ export default function SignUpUserForm() {
           {isLoading ? "Registering..." : "Register"}
         </Button>
       </form>
+
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => router.push("/signin")}
+        className="mt-4 text-sm text-blue-500 underline"
+      >
+        Already have an account? Sign in
+      </Button>
     </div>
   );
 }

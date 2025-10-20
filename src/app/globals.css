@@ -147,3 +147,11 @@
   padding-inline: clamp(1rem, 2vw, 12rem);
   padding-block: clamp(1rem, 2vw, 12rem);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

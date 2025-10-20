@@ -46,4 +46,5 @@ export type ChatMessage = {
   username: string;
   content: string;
   roomId: number;
+  timestamp: string;
 };

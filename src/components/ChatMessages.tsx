@@ -1,16 +1,27 @@
+import { useEffect, useRef } from "react";
 import { useUserStore } from "@/lib/stores/UserStore";
 import { ChatMessage } from "@/lib/types";
-import { ScrollArea } from "./ui/scroll-area";
+import { formatTimestamp } from "@/lib/helper/formatTimestamp";
 
 interface ChatMessagesProps {
   messages: ChatMessage[];
 }
 
 export default function ChatMessages({ messages }: ChatMessagesProps) {
-  const user = useUserStore((state) => state.user);
+  const user = useUserStore((s) => s.user);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [messages]);
 
   return (
-    <ScrollArea className="h-[20rem] w-[40rem] rounded-md border p-2">
+    <div
+      ref={scrollRef}
+      className="h-[20rem] w-[40rem] overflow-y-auto rounded-md border p-2 scrollbar-hide"
+    >
       <div className="flex flex-col gap-y-2">
         {messages.length === 0 ? (
           <div className="text-gray-500">No messages yet</div>
@@ -19,28 +30,38 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
             const isMine = msg.username === user?.username;
             const isSystem = msg.username === "System";
 
+            const base = "px-3 py-2 rounded-lg max-w-xs break-words text-sm";
+            const bubble = isSystem
+              ? "bg-transparent text-chart-3 italic text-xs"
+              : isMine
+              ? "bg-chart-4 text-foreground rounded-br-none"
+              : "bg-foreground text-background rounded-bl-none";
+
             return (
               <div
                 key={idx}
-                className={`flex ${isMine ? "justify-end" : "justify-start"}`}
+                className={`flex flex-col ${
+                  isMine ? "items-end" : "items-start"
+                }`}
               >
-                <div
-                  className={`px-3 py-2 rounded-lg max-w-xs break-words ${
-                    isSystem
-                      ? "bg-gray-200 text-gray-800 italic"
-                      : isMine
-                      ? "bg-blue-500 text-white rounded-br-none"
-                      : "bg-gray-300 text-background rounded-bl-none"
-                  }`}
-                >
-                  {!isMine && !isSystem && <strong>{msg.username}: </strong>}
-                  {msg.content}
+                {!isSystem && !isMine && (
+                  <div className="flex items-center gap-1 text-[10px] text-muted-foreground mb-1">
+                    <span className="font-semibold text-xs">
+                      {msg.username} -
+                    </span>
+                    <span className="text-xs">
+                      {formatTimestamp(msg.timestamp)}
+                    </span>
+                  </div>
+                )}
+                <div className={`${base} ${bubble}`}>
+                  {isSystem ? <p>{msg.content}</p> : <p>{msg.content}</p>}
                 </div>
               </div>
             );
           })
         )}
       </div>
-    </ScrollArea>
+    </div>
   );
 }

@@ -67,21 +67,24 @@ export default function CreateRoomForm() {
   return (
     <div className="flex flex-col gap-y-2">
       <h1>Create room:</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-sm">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-2 w-full max-w-sm md:max-w-full"
+      >
         <input
           type="text"
           placeholder="Room name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="border p-2 rounded"
+          className="border p-2 rounded w-full"
         />
         <input
           type="password"
           placeholder="Password (optional)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 rounded"
+          className="border p-2 rounded w-full"
         />
 
         {validationError && (

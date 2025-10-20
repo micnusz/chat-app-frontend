@@ -5,7 +5,6 @@ interface ChatRoomPageProps {
   params: { id: string };
 }
 
-// Server-side page
 export default async function ChatRoomPage({ params }: ChatRoomPageProps) {
   const roomId = parseInt(params.id, 10);
 
@@ -14,8 +13,8 @@ export default async function ChatRoomPage({ params }: ChatRoomPageProps) {
   }
 
   return (
-    <div className="h-full min-h-screen p-4">
-      <h1 className="text-xl font-bold mb-4">Chat Room #{roomId}</h1>
+    <div className="p-4 h-full">
+      <h1 className="text-lg font-bold mb-4">Chat Room #{roomId}</h1>
       <ChatRoom roomId={roomId} />
     </div>
   );

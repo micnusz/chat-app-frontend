@@ -20,7 +20,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
   return (
     <div
       ref={scrollRef}
-      className="h-[20rem] w-[40rem] overflow-y-auto rounded-md border p-2 scrollbar-hide"
+      className="flex-1 overflow-y-auto rounded-md border p-2 scrollbar-hide max-h-[30rem]"
     >
       <div className="flex flex-col gap-y-2">
         {messages.length === 0 ? (
@@ -35,7 +35,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
               ? "bg-transparent text-chart-3 italic text-xs"
               : isMine
               ? "bg-chart-4 text-foreground rounded-br-none"
-              : "bg-foreground text-background rounded-bl-none";
+              : "bg-foreground/90 text-background rounded-bl-none";
 
             return (
               <div
@@ -44,10 +44,10 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
                   isMine ? "items-end" : "items-start"
                 }`}
               >
-                {!isSystem && !isMine && (
+                {!isSystem && (
                   <div className="flex items-center gap-1 text-[10px] text-muted-foreground mb-1">
                     <span className="font-semibold text-xs">
-                      {msg.username} -
+                      {msg.username}
                     </span>
                     <span className="text-xs">
                       {formatTimestamp(msg.timestamp)}
@@ -55,7 +55,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
                   </div>
                 )}
                 <div className={`${base} ${bubble}`}>
-                  {isSystem ? <p>{msg.content}</p> : <p>{msg.content}</p>}
+                  <p>{msg.content}</p>
                 </div>
               </div>
             );

@@ -16,7 +16,7 @@ export default function ChatInput({ onSend }: ChatInputProps) {
   };
 
   return (
-    <div className="flex gap-2 max-w-[40rem]">
+    <div className="flex gap-2">
       <Input
         type="text"
         value={input}
@@ -25,7 +25,11 @@ export default function ChatInput({ onSend }: ChatInputProps) {
         className="flex-1 border rounded p-2"
         onKeyDown={(e) => e.key === "Enter" && handleSend()}
       />
-      <Button onClick={handleSend} className="bg-blue-500 text-white" size="sm">
+      <Button
+        onClick={handleSend}
+        variant={input == "" ? "outline" : "destructive"}
+        disabled={input == ""}
+      >
         Send
       </Button>
     </div>

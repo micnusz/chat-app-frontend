@@ -20,11 +20,11 @@ export default function ChatRoomList() {
   };
 
   return (
-    <div className="space-y-2 ">
+    <div className="space-y-2 w-full">
       {rooms?.map((room) => (
         <div
           key={room.id}
-          className="flex justify-between items-center p-2 border rounded"
+          className="flex justify-between items-center p-2 border rounded w-full"
         >
           <span>{room.name}</span>
           <Button

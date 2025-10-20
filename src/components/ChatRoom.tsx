@@ -18,10 +18,12 @@ export default function ChatRoom({ roomId }: ChatRoomProps) {
   if (!room) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col h-full p-4 gap-2 ">
-      <ChatRoomNavigation roomId={roomId} createdBy={room.createdBy} />
-      <ChatMessages messages={messages} />
-      <ChatInput onSend={sendMessage} />
+    <div className="flex justify-center w-full">
+      <div className="flex flex-col w-full max-w-[40rem] gap-2 h-screen">
+        <ChatRoomNavigation roomId={roomId} createdBy={room.createdBy} />
+        <ChatMessages messages={messages} />
+        <ChatInput onSend={sendMessage} />
+      </div>
     </div>
   );
 }

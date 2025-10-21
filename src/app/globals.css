@@ -174,40 +174,37 @@
 
 .ball {
   position: absolute;
-  width: 20vmin;
-  height: 20vmin;
-  border-radius: 50%;
+  width: 4vmin;
+  height: 4vmin;
+  border-radius: 40%;
   backface-visibility: hidden;
   animation: move linear infinite;
 }
-
-/* Przypisanie kolorów z palety */
 .ball:nth-child(1) {
-  color: var(--chart-1);
+  color: var(--chart-4);
 }
 .ball:nth-child(2) {
-  color: var(--chart-2);
+  color: var(--chart-4);
 }
 .ball:nth-child(3) {
-  color: var(--chart-3);
+  color: var(--chart-4);
 }
 .ball:nth-child(4) {
   color: var(--chart-4);
 }
 .ball:nth-child(5) {
-  color: var(--chart-1);
+  color: var(--chart-4);
 }
 .ball:nth-child(6) {
-  color: var(--chart-2);
+  color: var(--chart-4);
 }
 .ball:nth-child(7) {
-  color: var(--chart-3);
+  color: var(--chart-4);
 }
 .ball:nth-child(8) {
   color: var(--chart-4);
 }
 
-/* --- indywidualne parametry ruchu --- */
 .ball:nth-child(1) {
   top: 77%;
   left: 88%;

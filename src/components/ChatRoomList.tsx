@@ -6,6 +6,11 @@ import { useChatList } from "@/lib/hooks/useChatList";
 import { Button } from "./ui/button";
 import { ChatRoom } from "@/lib/types";
 import { Calendar, Lock, User } from "lucide-react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 export default function ChatRoomList() {
   const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
@@ -20,6 +25,9 @@ export default function ChatRoomList() {
     setDialogOpen(true);
   };
 
+  const truncateName = (name: string, maxLength = 30) =>
+    name.length > maxLength ? name.slice(0, maxLength) + "…" : name;
+
   return (
     <div className="space-y-3 w-full">
       {rooms?.map((room) => (
@@ -27,11 +35,20 @@ export default function ChatRoomList() {
           key={room.id}
           className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-border rounded-xl w-full hover:shadow-lg transition-shadow duration-200 bg-card"
         >
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full sm:w-auto">
-            <div className="flex items-center gap-1">
-              <User className="w-4 h-4 text-muted-foreground" />
-              <span className="font-medium text-foreground">{room.name}</span>
-            </div>
+          {/* Left info */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 flex-1 min-w-0">
+            <HoverCard>
+              <HoverCardTrigger className="flex items-center gap-1 min-w-0">
+                <User className="w-4 h-4 text-muted-foreground" />
+                <span className="font-medium text-foreground truncate">
+                  {truncateName(room.name)}
+                </span>
+              </HoverCardTrigger>
+              <HoverCardContent className="text-sm max-w-xs">
+                {room.name}
+              </HoverCardContent>
+            </HoverCard>
+
             <div className="flex items-center gap-1">
               <Calendar className="w-4 h-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
@@ -40,16 +57,21 @@ export default function ChatRoomList() {
                   : "Unknown"}
               </span>
             </div>
-            <div className="flex items-center gap-1">
-              {room.requiresPassword && (
-                <>
+
+            {room.requiresPassword && (
+              <HoverCard>
+                <HoverCardTrigger className="flex flex-row gap-x-1 items-center">
                   <Lock className="w-4 h-4 text-chart-2" />
                   <span className="text-sm text-chart-2">Protected</span>
-                </>
-              )}
-            </div>
+                </HoverCardTrigger>
+                <HoverCardContent className="text-sm">
+                  This room requires a password to join.
+                </HoverCardContent>
+              </HoverCard>
+            )}
           </div>
 
+          {/* Join button */}
           <JoinRoomDialog
             room={room}
             open={selectedRoom?.id === room.id && dialogOpen}
@@ -61,7 +83,7 @@ export default function ChatRoomList() {
             <Button
               variant={"destructive"}
               onClick={() => handleJoinClick(room)}
-              className="mt-3 sm:mt-0"
+              className="mt-3 sm:mt-0 ml-auto sm:ml-0"
             >
               Join
             </Button>

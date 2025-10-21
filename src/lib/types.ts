@@ -5,6 +5,7 @@ export type User = {
 
 export type UserRequestDTO = {
   username: string;
+  password: string;
 };
 
 export type UserResponseDTO = {
@@ -17,12 +18,23 @@ export type RegisterResponse = {
   token: string;
 };
 
+export type RegisterData = {
+  username: string;
+  password: string;
+};
+
 export type LoginResponse = {
   user: UserResponseDTO;
   token: string;
 };
 
+export type LoginData = {
+  username: string;
+  password: string;
+};
+
 export type ChatRoom = {
+  slug: string;
   id: number;
   name: string;
   createdBy: string;
@@ -47,4 +59,9 @@ export type ChatMessage = {
   content: string;
   roomId: number;
   timestamp: string;
+};
+
+export type AuthResponse = {
+  user: UserResponseDTO;
+  token: string;
 };

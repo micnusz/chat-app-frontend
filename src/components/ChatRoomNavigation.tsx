@@ -1,9 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "./ui/button";
-import { useDeleteChatRoom } from "@/lib/hooks/useDeleteChatRoom";
 import { useLeaveRoom } from "@/lib/hooks/useLeaveRoom";
 import { useUserStore } from "@/lib/stores/UserStore";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { EllipsisVertical } from "lucide-react";
+import DeleteRoomDialog from "./DeleteRoomDialog";
 
 type ChatRoomNavigationProps = {
   roomId: number;
@@ -17,31 +27,13 @@ export default function ChatRoomNavigation({
   onClose,
 }: ChatRoomNavigationProps) {
   const { user } = useUserStore();
-
-  const {
-    mutate: deleteRoom,
-    isError: deleteError,
-    error: deleteErrorData,
-  } = useDeleteChatRoom(roomId);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const {
     mutate: leaveRoom,
     isError: leaveError,
     error: leaveErrorData,
   } = useLeaveRoom(roomId);
-
-  const handleDelete = () => {
-    deleteRoom(undefined, {
-      onSuccess: () => {
-        if (onClose) onClose();
-      },
-      onError: (err) => {
-        console.error(
-          err.response?.data?.message || "Failed to delete the room."
-        );
-      },
-    });
-  };
 
   const handleLeave = () => {
     leaveRoom(undefined, {
@@ -63,16 +55,33 @@ export default function ChatRoomNavigation({
       </Button>
 
       {user?.username === createdBy && (
-        <Button variant="destructive" onClick={handleDelete}>
-          Delete Room
-        </Button>
-      )}
-
-      {deleteError && (
-        <div className="text-red-500 text-sm">
-          {deleteErrorData?.response?.data?.message || "Error deleting room."}
+        <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                <EllipsisVertical />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>More Options</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => setConfirmOpen(true)}
+                className="text-red-400"
+              >
+                Delete Room
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       )}
+
+      <DeleteRoomDialog
+        roomId={roomId}
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onDeleted={onClose}
+      />
 
       {leaveError && (
         <div className="text-red-500 text-sm">

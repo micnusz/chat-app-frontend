@@ -1,10 +1,5 @@
 import api from "./apiClient";
-import { UserRequestDTO, UserResponseDTO } from "./types";
-
-export interface AuthResponse {
-  user: UserResponseDTO;
-  token: string;
-}
+import { AuthResponse, UserRequestDTO } from "./types";
 
 export async function loginUser(
   payload: UserRequestDTO

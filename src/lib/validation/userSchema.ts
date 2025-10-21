@@ -9,4 +9,12 @@ export const userSchema = z.object({
       /^[a-zA-Z0-9_]+$/,
       "Only letters, numbers, and underscores are allowed."
     ),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters long.")
+    .max(20, "Password cannot exceed 30 characters.")
+    .regex(
+      /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{}|;:'",.<>?/]+$/,
+      "Password can contain letters, numbers, and special characters."
+    ),
 });

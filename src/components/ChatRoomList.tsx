@@ -27,22 +27,23 @@ export default function ChatRoomList() {
           className="flex justify-between items-center p-2 border rounded w-full"
         >
           <span>{room.name}</span>
-          <Button
-            className="bg-blue-500 text-white px-2 py-1 rounded"
-            onClick={() => handleJoinClick(room)}
+          <JoinRoomDialog
+            room={room}
+            open={selectedRoom?.id === room.id && dialogOpen}
+            onClose={() => {
+              setDialogOpen(false);
+              setSelectedRoom(null);
+            }}
           >
-            Join
-          </Button>
+            <Button
+              className="bg-blue-500 text-white px-2 py-1 rounded"
+              onClick={() => handleJoinClick(room)}
+            >
+              Join
+            </Button>
+          </JoinRoomDialog>
         </div>
       ))}
-
-      {selectedRoom && (
-        <JoinRoomDialog
-          room={selectedRoom}
-          open={dialogOpen}
-          onClose={() => setDialogOpen(false)}
-        />
-      )}
     </div>
   );
 }

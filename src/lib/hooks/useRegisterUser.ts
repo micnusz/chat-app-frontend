@@ -2,16 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { registerUser } from "@/lib/api";
 import { useUserStore } from "@/lib/stores/UserStore";
-import { UserResponseDTO } from "../types";
-
-interface RegisterData {
-  username: string;
-}
-
-interface RegisterResponse {
-  user: UserResponseDTO;
-  token: string;
-}
+import { RegisterData, RegisterResponse } from "../types";
 
 export function useRegisterUser() {
   const setAuth = useUserStore((s) => s.setAuth);

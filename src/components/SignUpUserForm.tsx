@@ -12,6 +12,7 @@ import { ErrorResponse } from "@/lib/types";
 
 export default function SignUpUserForm() {
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const router = useRouter();
   const token = useUserStore((s) => s.token);
@@ -26,7 +27,7 @@ export default function SignUpUserForm() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const result = userSchema.safeParse({ username });
+    const result = userSchema.safeParse({ username, password });
     if (!result.success) {
       setValidationError(result.error.issues[0].message);
       return;
@@ -35,7 +36,7 @@ export default function SignUpUserForm() {
     setValidationError(null);
 
     registerMutation.mutate(
-      { username },
+      { username, password },
       {
         onSuccess: (data) => {
           setAuth(data.user, data.token);
@@ -61,6 +62,14 @@ export default function SignUpUserForm() {
           value={username}
           placeholder="Enter username"
           onChange={(e) => setUsername(e.target.value)}
+          className="border rounded p-2"
+        />
+
+        <Input
+          type="text"
+          value={password}
+          placeholder="Enter password"
+          onChange={(e) => setPassword(e.target.value)}
           className="border rounded p-2"
         />
 

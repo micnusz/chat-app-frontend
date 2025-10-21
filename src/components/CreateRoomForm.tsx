@@ -6,6 +6,8 @@ import { useCreateRoom } from "@/lib/hooks/useCreateRoom";
 import { AxiosError } from "axios";
 import { ChatRoom } from "@/lib/types";
 import { chatRoomSchema } from "@/lib/validation/chatRoomSchema";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 export default function CreateRoomForm() {
   const { user } = useUserStore();
@@ -64,6 +66,8 @@ export default function CreateRoomForm() {
     );
   }
 
+  const isDisabled = isPending || name === "";
+
   return (
     <div className="flex flex-col gap-y-2">
       <h1>Create room:</h1>
@@ -71,33 +75,34 @@ export default function CreateRoomForm() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-2 w-full max-w-sm md:max-w-full"
       >
-        <input
+        <Input
           type="text"
           placeholder="Room name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="border p-2 rounded w-full"
+          className="w-full"
         />
-        <input
+        <Input
           type="password"
           placeholder="Password (optional)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="w-full"
         />
 
         {validationError && (
           <p className="text-red-500 text-sm">{validationError}</p>
         )}
 
-        <button
+        <Button
           type="submit"
-          disabled={isPending}
-          className="bg-blue-500 text-white p-2 rounded disabled:opacity-50"
+          disabled={isDisabled}
+          variant={isDisabled ? "outline" : "destructive"}
+          className="disabled:opacity-50"
         >
           {isPending ? "Creating..." : "Create Room"}
-        </button>
+        </Button>
 
         {message && <p className="text-sm mt-1">{message}</p>}
 

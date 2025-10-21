@@ -5,6 +5,7 @@ import JoinRoomDialog from "./JoinRoomDialog";
 import { useChatList } from "@/lib/hooks/useChatList";
 import { Button } from "./ui/button";
 import { ChatRoom } from "@/lib/types";
+import { Calendar, Lock, User } from "lucide-react";
 
 export default function ChatRoomList() {
   const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
@@ -20,13 +21,35 @@ export default function ChatRoomList() {
   };
 
   return (
-    <div className="space-y-2 w-full">
+    <div className="space-y-3 w-full">
       {rooms?.map((room) => (
         <div
           key={room.id}
-          className="flex justify-between items-center p-2 border rounded w-full"
+          className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-border rounded-xl w-full hover:shadow-lg transition-shadow duration-200 bg-card"
         >
-          <span>{room.name}</span>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full sm:w-auto">
+            <div className="flex items-center gap-1">
+              <User className="w-4 h-4 text-muted-foreground" />
+              <span className="font-medium text-foreground">{room.name}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Calendar className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">
+                {room.createdAt
+                  ? new Date(room.createdAt).toLocaleDateString()
+                  : "Unknown"}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              {room.requiresPassword && (
+                <>
+                  <Lock className="w-4 h-4 text-chart-2" />
+                  <span className="text-sm text-chart-2">Protected</span>
+                </>
+              )}
+            </div>
+          </div>
+
           <JoinRoomDialog
             room={room}
             open={selectedRoom?.id === room.id && dialogOpen}
@@ -36,8 +59,9 @@ export default function ChatRoomList() {
             }}
           >
             <Button
-              className="bg-blue-500 text-white px-2 py-1 rounded"
+              variant={"destructive"}
               onClick={() => handleJoinClick(room)}
+              className="mt-3 sm:mt-0"
             >
               Join
             </Button>

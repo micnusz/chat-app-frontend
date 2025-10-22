@@ -60,12 +60,6 @@ export default function CreateRoomForm() {
     );
   };
 
-  if (!user) {
-    return (
-      <p className="text-red-500">You must be logged in to create a room.</p>
-    );
-  }
-
   const isDisabled = isPending || name === "";
 
   return (

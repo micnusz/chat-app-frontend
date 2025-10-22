@@ -14,7 +14,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="h-16 p-4 bg-accent flex flex-row gap-x-4 items-center">
+    <div className="h-16 p-4 bg-background border-b-2 flex flex-row gap-x-4 items-center">
       <h1>logged in as: {user?.username}</h1>
       {user != null && <Button onClick={handleLogout}>Logout</Button>}
     </div>

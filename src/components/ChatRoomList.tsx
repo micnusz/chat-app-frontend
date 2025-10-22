@@ -30,10 +30,11 @@ export default function ChatRoomList() {
 
   return (
     <div className="space-y-3 w-full">
+      {rooms?.length ? <h1>Room List:</h1> : null}
       {rooms?.map((room) => (
         <div
           key={room.id}
-          className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-border rounded-xl w-full hover:shadow-lg transition-shadow duration-200 bg-card"
+          className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-border rounded-xl w-full hover:shadow-lg transition-shadow duration-200 dark:bg-input/30"
         >
           {/* Left info */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 flex-1 min-w-0">
@@ -45,17 +46,27 @@ export default function ChatRoomList() {
                 </span>
               </HoverCardTrigger>
               <HoverCardContent className="text-sm max-w-xs">
-                {room.name}
+                Name: {room.name}
               </HoverCardContent>
             </HoverCard>
 
             <div className="flex items-center gap-1">
-              <Calendar className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
-                {room.createdAt
-                  ? new Date(room.createdAt).toLocaleDateString()
-                  : "Unknown"}
-              </span>
+              <HoverCard>
+                <HoverCardTrigger className="flex items-center gap-1 min-w-0">
+                  <Calendar className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">
+                    {room.createdAt
+                      ? new Date(room.createdAt).toLocaleDateString()
+                      : "Unknown"}
+                  </span>
+                </HoverCardTrigger>
+                <HoverCardContent className="text-sm max-w-xs">
+                  Created at:{" "}
+                  {room.createdAt
+                    ? new Date(room.createdAt).toLocaleDateString()
+                    : "Unknown"}
+                </HoverCardContent>
+              </HoverCard>
             </div>
 
             {room.requiresPassword && (

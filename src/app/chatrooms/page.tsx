@@ -1,5 +1,10 @@
+"use server";
 import { ChatRoomsClient } from "./ChatRoomsClient";
 
 export default async function ChatRoomsPage() {
-  return <ChatRoomsClient />;
+  return (
+    <>
+      <ChatRoomsClient />
+    </>
+  );
 }

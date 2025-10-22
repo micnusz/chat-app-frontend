@@ -36,7 +36,6 @@ export default function ChatRoomList() {
           key={room.id}
           className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-border rounded-xl w-full hover:shadow-lg transition-shadow duration-200 dark:bg-input/30"
         >
-          {/* Left info */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 flex-1 min-w-0">
             <HoverCard>
               <HoverCardTrigger className="flex items-center gap-1 min-w-0">
@@ -81,8 +80,6 @@ export default function ChatRoomList() {
               </HoverCard>
             )}
           </div>
-
-          {/* Join button */}
           <JoinRoomDialog
             room={room}
             open={selectedRoom?.id === room.id && dialogOpen}

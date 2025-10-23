@@ -20,6 +20,7 @@ export function useChatWebSocket(roomId: number) {
   useEffect(() => {
     if (!token || !user || !roomId) return;
 
+    // TO CHANGE IN PROD
     const ws = new WebSocket(
       `ws://localhost:8080/chat/${roomId}?token=${token}`
     );

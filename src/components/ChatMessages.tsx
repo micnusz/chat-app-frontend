@@ -4,9 +4,9 @@ import { ChatMessage } from "@/lib/types";
 import { formatTimestamp } from "@/lib/helper/formatTimestamp";
 import getUserColor from "@/lib/helper/getUserColor";
 
-interface ChatMessagesProps {
+type ChatMessagesProps = {
   messages: ChatMessage[];
-}
+};
 
 export default function ChatMessages({ messages }: ChatMessagesProps) {
   const user = useUserStore((s) => s.user);
@@ -42,7 +42,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
             : { backgroundColor: getUserColor(msg.username), color: "white" };
 
           const bubbleClass = isSystem
-            ? "bg-transparent text-chart-3 italic text-xs"
+            ? "bg-transparent text-foreground italic text-xs"
             : isMine
             ? "bg-chart-4 text-foreground rounded-br-none"
             : "rounded-bl-none";

@@ -45,13 +45,15 @@ export default function SignInUserForm() {
     );
   };
 
-  const isLoading = loginMutation.isLoading;
+  const isPending = loginMutation.isPending;
 
   const errorMessage =
     (loginMutation.error as AxiosError<ErrorResponse>)?.response?.data
       ?.message ||
     (loginMutation.error as AxiosError)?.message ||
     null;
+
+  const isDisabled = !username.trim() || !password.trim() || isPending;
 
   return (
     <div className="flex flex-col items-center mt-24">
@@ -81,8 +83,8 @@ export default function SignInUserForm() {
           <div className="text-red-500 text-sm">{errorMessage}</div>
         )}
 
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Signing in..." : "Sign in"}
+        <Button type="submit" disabled={isDisabled}>
+          {isPending ? "Signing in..." : "Sign in"}
         </Button>
       </form>
 

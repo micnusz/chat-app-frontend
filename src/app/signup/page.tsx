@@ -4,7 +4,7 @@ import SignUpUserForm from "@/components/SignUpUserForm";
 
 export default async function SignUpPage() {
   return (
-    <div>
+    <div className="h-screen">
       <SignUpUserForm />
     </div>
   );

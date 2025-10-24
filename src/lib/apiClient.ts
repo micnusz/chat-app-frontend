@@ -22,8 +22,7 @@ api.interceptors.response.use(
       console.warn("Session expired. User logged out.");
     }
 
-    const message = error.response?.data?.message || "An error occurred";
-    return Promise.reject(new Error(message));
+    return Promise.reject(error);
   }
 );
 

@@ -88,10 +88,10 @@ export default function SignUpUserForm() {
       </form>
 
       <Button
-        variant="ghost"
+        variant="link"
         size="sm"
         onClick={() => router.push("/signin")}
-        className="mt-4 text-sm text-blue-500 underline"
+        className="mt-2 text-sm text-foreground"
       >
         Already have an account? Sign in
       </Button>

@@ -40,7 +40,7 @@ export default function ChatInput({ onSend }: ChatInputProps) {
         />
         <Button
           onClick={handleSend}
-          variant={message == "" ? "outline" : "destructive"}
+          variant={message == "" ? "outline" : "default"}
           disabled={message == ""}
         >
           Send

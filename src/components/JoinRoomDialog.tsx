@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useJoinRoom } from "@/lib/hooks/useJoinRoom";
 import { AxiosError } from "axios";
+import { ErrorResponse } from "@/lib/types";
 
 interface JoinRoomDialogProps {
   room: {
@@ -65,9 +66,9 @@ export default function JoinRoomDialog({
           onClose();
           router.push(`/chatrooms/${room.slug}`);
         },
-        onError: (err: AxiosError<{ message?: string }>) => {
+        onError: (err: AxiosError<ErrorResponse>) => {
           setErrorMessage(
-            err.response?.data?.message || "Failed to join the room."
+            err.response?.data?.message ?? "Failed to join the room."
           );
         },
       }
@@ -97,7 +98,7 @@ export default function JoinRoomDialog({
           </div>
 
           {errorMessage && (
-            <p className="text-red-500 text-sm mb-2">{errorMessage}</p>
+            <p className="text-red-500 text-xs">{errorMessage}</p>
           )}
 
           <DialogFooter>

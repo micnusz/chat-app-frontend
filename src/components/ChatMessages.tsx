@@ -21,7 +21,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
   return (
     <div
       ref={scrollRef}
-      className="flex-1 overflow-y-auto rounded-md border p-2 scrollbar-hide max-h-[30rem]"
+      className="flex-1 overflow-y-auto rounded-md border-1 p-2 scrollbar-hide max-h-[30rem]"
     >
       <div className="flex flex-col gap-y-2">
         {messages.length === 0 && (
@@ -39,12 +39,15 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
             ? {}
             : isMine
             ? {}
-            : { backgroundColor: getUserColor(msg.username), color: "white" };
+            : {
+                backgroundColor: getUserColor(msg.username ?? "unknown"),
+                color: "white",
+              };
 
           const bubbleClass = isSystem
             ? "bg-transparent text-foreground italic text-xs"
             : isMine
-            ? "bg-chart-4 text-foreground rounded-br-none"
+            ? "bg-primary text-foreground rounded-br-none"
             : "rounded-bl-none";
 
           return (

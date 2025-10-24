@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
 } from "./ui/dropdown-menu";
 import Link from "next/link";
+import { ModeToggle } from "./ModeToggle";
 
 export default function Navbar() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function Navbar() {
 
   return (
     <div className="flex flex-row items-center justify-between h-16 p-4 bg-background border-b-2 px-4">
-      <Link href={"/"} className="transition duration-200 hover:text-chart-3">
+      <Link href={"/"} className="transition duration-200 hover:text-primary">
         <div className="flex flex-row gap-x-1 items-center">
           <span>
             <MessagesSquare className="w-5 h-5 " />
@@ -37,12 +38,14 @@ export default function Navbar() {
 
       <div className="flex flex-row gap-x-6">
         <div className="flex items-center gap-x-2 ">
-          <div>
+          <div className="flex flex-row items-center gap-x-2">
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex flex-row gap-x-1">
-                  <User />
-                  <span className="font-medium">{user?.username}</span>
+                <DropdownMenuTrigger asChild className="flex flex-row gap-x-1">
+                  <Button variant="outline">
+                    <User />
+                    <span className="font-medium">{user?.username}</span>
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={handleLogout}>
@@ -51,10 +54,11 @@ export default function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="destructive" onClick={handleSignIn}>
+              <Button variant="default" onClick={handleSignIn}>
                 Sign in
               </Button>
             )}
+            <ModeToggle />
           </div>
         </div>
       </div>

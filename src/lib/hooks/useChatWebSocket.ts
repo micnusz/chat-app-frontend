@@ -54,7 +54,6 @@ export function useChatWebSocket(roomId: number) {
       };
       ws.send(JSON.stringify(payload));
 
-      // Optimistic update
       queryClient.setQueryData<ChatMessage[]>(
         ["chat-messages", roomId],
         (old = []) => [...old, payload as ChatMessage]

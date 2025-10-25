@@ -50,7 +50,7 @@ export default function ChatRoomNavigation({
 
   return (
     <div className="flex flex-row gap-x-2">
-      <Button variant="outline" onClick={handleLeave}>
+      <Button variant="destructive" onClick={handleLeave}>
         Exit
       </Button>
 

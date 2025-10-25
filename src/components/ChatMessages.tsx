@@ -18,20 +18,32 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
     el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [messages]);
 
+  const processedMessages = messages.map((m) => ({
+    ...m,
+    time: new Date(m.timestamp).getTime(),
+  }));
+
   return (
     <div
       ref={scrollRef}
       className="flex-1 overflow-y-auto rounded-md border-1 p-2 scrollbar-hide max-h-[30rem]"
     >
-      <div className="flex flex-col gap-y-2">
-        {messages.length === 0 && (
+      <div className="flex flex-col gap-y-1">
+        {processedMessages.length === 0 && (
           <div className="text-gray-500">No messages yet</div>
         )}
 
-        {messages.map((msg, idx) => {
+        {processedMessages.map((msg, idx) => {
           const isMine =
             user?.username?.toLowerCase() === msg.username?.toLowerCase();
           const isSystem = msg.username === "System";
+
+          const prev = idx > 0 ? processedMessages[idx - 1] : null;
+          const isFirstOfGroup =
+            !prev ||
+            prev.username !== msg.username ||
+            prev.username === "System" ||
+            msg.time - prev.time > 60 * 1000; // >1min gap → new group
 
           const base = "px-3 py-2 rounded-lg max-w-xs break-words text-sm";
 
@@ -57,7 +69,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
                 isMine ? "items-end" : "items-start"
               }`}
             >
-              {!isSystem && (
+              {isFirstOfGroup && !isSystem && (
                 <div
                   className={`flex flex-row items-center gap-1 text-xs text-muted-foreground mb-1 ${
                     isMine ? "justify-end" : ""
@@ -72,7 +84,6 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
                 </div>
               )}
 
-              {/* Wiadomość */}
               <div className={`${base} ${bubbleClass}`} style={bubbleStyle}>
                 <p>{msg.content}</p>
               </div>

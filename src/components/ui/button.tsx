@@ -10,6 +10,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        chart1: "bg-chart-1 text-primary-foreground hover:bg-chart-1/90",
+        chart2: "bg-chart-2 text-primary-foreground hover:bg-chart-2/90",
+        chart3: "bg-chart-3 text-primary-foreground hover:bg-chart-3/90",
+        chart4: "bg-chart-4 text-primary-foreground hover:bg-chart-4/90",
+        chart5: "bg-chart-5 text-primary-foreground hover:bg-chart-5/90",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:

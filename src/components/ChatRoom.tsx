@@ -15,6 +15,7 @@ export default function ChatRoom({ roomId }: ChatRoomProps) {
   const { data: messages = [] } = useChatMessages(roomId);
   const { sendMessage } = useChatWebSocket(roomId);
   const { data: room } = useGetChatRoomInfo(roomId);
+
   if (!room) return <div>Loading...</div>;
 
   return (

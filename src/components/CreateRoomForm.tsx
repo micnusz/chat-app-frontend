@@ -92,7 +92,7 @@ export default function CreateRoomForm() {
         <Button
           type="submit"
           disabled={isDisabled}
-          variant={isDisabled ? "outline" : "destructive"}
+          variant={"default"}
           className="disabled:opacity-50"
         >
           {isPending ? "Creating..." : "Create Room"}

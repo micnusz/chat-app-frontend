@@ -53,7 +53,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
           return (
             <div
               key={idx}
-              className={`flex flex-col mb-1 ${
+              className={`flex flex-col ${
                 isMine ? "items-end" : "items-start"
               }`}
             >

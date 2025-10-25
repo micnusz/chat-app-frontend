@@ -1,26 +1,18 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import { useUserStore } from "@/lib/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { ChatMessage } from "../types";
-import { useMessages } from "./useMessages";
+import { ChatMessage } from "@/lib/types";
 
 export function useChatWebSocket(roomId: number) {
   const { token, user } = useUserStore();
   const queryClient = useQueryClient();
   const wsRef = useRef<WebSocket | null>(null);
-  const { data: messagesFromDB = [] } = useMessages(roomId);
-
-  useEffect(() => {
-    queryClient.setQueryData<ChatMessage[]>(
-      ["chat-messages", roomId],
-      messagesFromDB
-    );
-  }, [messagesFromDB, roomId, queryClient]);
 
   useEffect(() => {
     if (!token || !user || !roomId) return;
 
-    // TO CHANGE IN PROD
     const ws = new WebSocket(
       `ws://localhost:8080/chat/${roomId}?token=${token}`
     );
@@ -62,6 +54,7 @@ export function useChatWebSocket(roomId: number) {
       };
       ws.send(JSON.stringify(payload));
 
+      // Optimistic update
       queryClient.setQueryData<ChatMessage[]>(
         ["chat-messages", roomId],
         (old = []) => [...old, payload as ChatMessage]

@@ -6,7 +6,7 @@ import { ChatMessage } from "@/lib/types";
 import api from "@/lib/apiClient";
 
 export function useChatMessages(roomId: number) {
-  const { user } = useUserStore(); // token usunięty
+  const { user } = useUserStore();
 
   return useQuery<ChatMessage[]>({
     queryKey: ["chat-messages", roomId],

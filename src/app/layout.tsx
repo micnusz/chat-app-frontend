@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import QueryProvider from "@/lib/tanstack/QueryProvider";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import { useInitUser } from "@/lib/hooks/useInitUser";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +26,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  useInitUser();
   return (
     <html lang="en" suppressHydrationWarning>
       <body

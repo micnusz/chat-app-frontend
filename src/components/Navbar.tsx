@@ -12,10 +12,27 @@ import {
 } from "./ui/dropdown-menu";
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
+import { useEffect } from "react";
+import api from "@/lib/apiClient";
 
 export default function Navbar() {
   const router = useRouter();
-  const { user, clearAuth } = useUserStore();
+  const { user, setUser, clearAuth } = useUserStore();
+
+  useEffect(() => {
+    if (!user) {
+      api
+        .get("/api/users/me")
+        .then((res) => setUser(res.data))
+        .catch(() => {
+          api
+            .post("/api/users/refresh")
+            .then(() => api.get("/api/users/me"))
+            .then((res) => setUser(res.data))
+            .catch(() => clearAuth());
+        });
+    }
+  }, [user, setUser, clearAuth]);
 
   const handleLogout = () => {
     clearAuth();

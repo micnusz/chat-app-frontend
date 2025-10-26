@@ -1,23 +1,27 @@
-import { useEffect } from "react";
-import api from "../apiClient";
-import { useUserStore } from "../stores/UserStore";
+import { useQuery } from "@tanstack/react-query";
+import { useUserStore } from "@/lib/stores/UserStore";
+import api from "@/lib/apiClient";
 import { UserResponseDTO } from "../types";
 
-export function useInitUser() {
-  const setUser = useUserStore((state) => state.setUser);
-  const clearAuth = useUserStore((state) => state.clearAuth);
+export function useCurrentUser() {
+  const setUser = useUserStore((s) => s.setUser);
+  const clearAuth = useUserStore.getState().clearAuth;
 
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
+  return useQuery<UserResponseDTO, Error>({
+    queryKey: ["current-user"],
+    queryFn: async () => {
       try {
-        const res = await api.get<UserResponseDTO>("/api/users/me");
+        const res = await api.get<UserResponseDTO>("/api/users/me", {
+          withCredentials: true,
+        });
         setUser(res.data);
+        return res.data;
       } catch (err) {
-        console.warn(err);
         clearAuth();
+        throw err;
       }
-    };
-
-    fetchCurrentUser();
-  }, [setUser, clearAuth]);
+    },
+    staleTime: Infinity,
+    retry: false,
+  });
 }

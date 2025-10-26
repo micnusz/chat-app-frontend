@@ -12,21 +12,10 @@ import {
 } from "./ui/dropdown-menu";
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
-import { useEffect } from "react";
-import api from "@/lib/apiClient";
 
 export default function Navbar() {
   const router = useRouter();
-  const { user, setUser, clearAuth } = useUserStore();
-
-  useEffect(() => {
-    if (!user) {
-      api
-        .post("/api/users/refresh")
-        .then((res) => setUser(res.data))
-        .catch(() => clearAuth());
-    }
-  }, [user]);
+  const { user, clearAuth } = useUserStore();
 
   const handleLogout = () => {
     clearAuth();

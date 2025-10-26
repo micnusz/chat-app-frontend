@@ -22,17 +22,11 @@ export default function Navbar() {
   useEffect(() => {
     if (!user) {
       api
-        .get("/api/users/me")
+        .post("/api/users/refresh")
         .then((res) => setUser(res.data))
-        .catch(() => {
-          api
-            .post("/api/users/refresh")
-            .then(() => api.get("/api/users/me"))
-            .then((res) => setUser(res.data))
-            .catch(() => clearAuth());
-        });
+        .catch(() => clearAuth());
     }
-  }, [user, setUser, clearAuth]);
+  }, []);
 
   const handleLogout = () => {
     clearAuth();

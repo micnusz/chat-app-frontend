@@ -83,6 +83,15 @@ export default function SignUpUserForm() {
           )}
         </Button>
       </form>
+
+      <Button
+        variant="link"
+        size="sm"
+        onClick={() => router.push("/signin")}
+        className="mt-2 text-sm text-foreground"
+      >
+        Already have an account? Sign in
+      </Button>
     </div>
   );
 }

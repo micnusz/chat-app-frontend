@@ -26,7 +26,7 @@ export default function Navbar() {
         .then((res) => setUser(res.data))
         .catch(() => clearAuth());
     }
-  }, [user, clearAuth, setUser]);
+  }, [user]);
 
   const handleLogout = () => {
     clearAuth();

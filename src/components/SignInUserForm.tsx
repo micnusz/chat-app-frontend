@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { useLoginUser } from "@/lib/hooks/useLoginUser";
 import { userSchema } from "@/lib/validation/userSchema";
-import { useUserStore } from "@/lib/stores/UserStore";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/lib/types";
 import Spinner from "./Spinner";
@@ -16,13 +15,8 @@ export default function SignInUserForm() {
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const router = useRouter();
-  const user = useUserStore((s) => s.user);
 
   const loginMutation = useLoginUser();
-
-  useEffect(() => {
-    if (user) router.push("/chatrooms");
-  }, [user, router]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -32,10 +26,16 @@ export default function SignInUserForm() {
       setValidationError(result.error.issues[0].message);
       return;
     }
-
     setValidationError(null);
 
-    loginMutation.mutate({ username, password });
+    loginMutation.mutate(
+      { username, password },
+      {
+        onSuccess: () => {
+          router.push("/chatrooms");
+        },
+      }
+    );
   };
 
   const isPending = loginMutation.isPending;
@@ -51,7 +51,6 @@ export default function SignInUserForm() {
   return (
     <div className="flex flex-col items-center mt-24">
       <h2 className="text-xl font-bold mb-4">Sign in</h2>
-
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-64">
         <Input
           type="text"
@@ -60,7 +59,6 @@ export default function SignInUserForm() {
           onChange={(e) => setUsername(e.target.value)}
           className="border rounded p-2"
         />
-
         <Input
           type="password"
           value={password}
@@ -68,14 +66,12 @@ export default function SignInUserForm() {
           onChange={(e) => setPassword(e.target.value)}
           className="border rounded p-2"
         />
-
         {validationError && (
           <div className="text-red-500 text-sm">{validationError}</div>
         )}
         {errorMessage && (
           <div className="text-red-500 text-sm">{errorMessage}</div>
         )}
-
         <Button type="submit" disabled={isDisabled}>
           {isPending ? (
             <>
@@ -87,15 +83,6 @@ export default function SignInUserForm() {
           )}
         </Button>
       </form>
-
-      <Button
-        variant="link"
-        size="sm"
-        onClick={() => router.push("/signup")}
-        className="mt-2 text-sm text-foreground"
-      >
-        Don&apos;t have an account? Register
-      </Button>
     </div>
   );
 }

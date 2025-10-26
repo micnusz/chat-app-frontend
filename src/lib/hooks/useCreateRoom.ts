@@ -12,7 +12,7 @@ export function useCreateRoom() {
       return res.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["all-chat-rooms"] });
+      queryClient.invalidateQueries({ queryKey: ["chat-room-list"] });
     },
   });
 }

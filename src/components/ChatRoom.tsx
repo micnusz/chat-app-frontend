@@ -6,6 +6,7 @@ import ChatInput from "@/components/ChatInput";
 import ChatMessages from "@/components/ChatMessages";
 import ChatRoomNavigation from "./ChatRoomNavigation";
 import { useGetChatRoomInfo } from "@/lib/hooks/useGetChatRoomInfo";
+import Spinner from "./Spinner";
 
 type ChatRoomProps = {
   roomId: number;
@@ -16,7 +17,7 @@ export default function ChatRoom({ roomId }: ChatRoomProps) {
   const { sendMessage } = useChatWebSocket(roomId);
   const { data: room } = useGetChatRoomInfo(roomId);
 
-  if (!room) return <div>Loading...</div>;
+  if (!room) return <Spinner />;
 
   return (
     <div className="flex justify-center w-full">

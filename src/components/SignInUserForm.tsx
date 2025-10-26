@@ -9,20 +9,20 @@ import { userSchema } from "@/lib/validation/userSchema";
 import { useUserStore } from "@/lib/stores/UserStore";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/lib/types";
+import Spinner from "./Spinner";
 
 export default function SignInUserForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const router = useRouter();
-  const token = useUserStore((s) => s.token);
-  const setAuth = useUserStore((s) => s.setAuth);
+  const user = useUserStore((s) => s.user);
 
   const loginMutation = useLoginUser();
 
   useEffect(() => {
-    if (token) router.push("/chatrooms");
-  }, [token, router]);
+    if (user) router.push("/chatrooms");
+  }, [user, router]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -35,14 +35,7 @@ export default function SignInUserForm() {
 
     setValidationError(null);
 
-    loginMutation.mutate(
-      { username, password },
-      {
-        onSuccess: (data) => {
-          setAuth(data.user, data.token);
-        },
-      }
-    );
+    loginMutation.mutate({ username, password });
   };
 
   const isPending = loginMutation.isPending;
@@ -69,7 +62,7 @@ export default function SignInUserForm() {
         />
 
         <Input
-          type="text"
+          type="password"
           value={password}
           placeholder="Enter password"
           onChange={(e) => setPassword(e.target.value)}
@@ -84,7 +77,14 @@ export default function SignInUserForm() {
         )}
 
         <Button type="submit" disabled={isDisabled}>
-          {isPending ? "Signing in..." : "Sign in"}
+          {isPending ? (
+            <>
+              <Spinner aria-label="Signing in..." />
+              <span className="sr-only">Signing in...</span>
+            </>
+          ) : (
+            "Sign in"
+          )}
         </Button>
       </form>
 

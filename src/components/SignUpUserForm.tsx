@@ -9,20 +9,23 @@ import { userSchema } from "@/lib/validation/userSchema";
 import { useUserStore } from "@/lib/stores/UserStore";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/lib/types";
+import Spinner from "./Spinner";
+import { useCurrentUser } from "@/lib/hooks/useCurrentUser";
 
 export default function SignUpUserForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
+
   const router = useRouter();
-  const token = useUserStore((s) => s.token);
-  const setAuth = useUserStore((s) => s.setAuth);
+  const { data: currentUser, refetch: refetchUser } = useCurrentUser();
+  const setUser = useUserStore((s) => s.setUser);
 
   const registerMutation = useRegisterUser();
 
   useEffect(() => {
-    if (token) router.push("/chatrooms");
-  }, [token, router]);
+    if (currentUser) router.push("/chatrooms");
+  }, [currentUser, router]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -38,8 +41,16 @@ export default function SignUpUserForm() {
     registerMutation.mutate(
       { username, password },
       {
-        onSuccess: (data) => {
-          setAuth(data.user, data.token);
+        onSuccess: async () => {
+          try {
+            const userResult = await refetchUser();
+            if (userResult.data) {
+              setUser(userResult.data.user);
+              router.push("/chatrooms");
+            }
+          } catch (err) {
+            console.error("Could not fetch user", err);
+          }
         },
       }
     );
@@ -68,7 +79,7 @@ export default function SignUpUserForm() {
         />
 
         <Input
-          type="text"
+          type="password"
           value={password}
           placeholder="Enter password"
           onChange={(e) => setPassword(e.target.value)}
@@ -83,7 +94,14 @@ export default function SignUpUserForm() {
         )}
 
         <Button type="submit" disabled={isDisabled}>
-          {isPending ? "Registering..." : "Register"}
+          {isPending ? (
+            <>
+              <Spinner aria-label="Registering..." />
+              <span className="sr-only">Registering...</span>
+            </>
+          ) : (
+            "Register"
+          )}
         </Button>
       </form>
 

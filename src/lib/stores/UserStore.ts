@@ -4,8 +4,7 @@ import { UserResponseDTO } from "../types";
 
 interface UserState {
   user: UserResponseDTO | null;
-  token: string | null;
-  setAuth: (user: UserResponseDTO, token: string) => void;
+  setUser: (user: UserResponseDTO) => void;
   clearAuth: () => void;
 }
 
@@ -13,9 +12,8 @@ export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       user: null,
-      token: null,
-      setAuth: (user, token) => set({ user, token }),
-      clearAuth: () => set({ user: null, token: null }),
+      setUser: (user) => set({ user }),
+      clearAuth: () => set({ user: null }),
     }),
     { name: "user-storage" }
   )

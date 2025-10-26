@@ -6,16 +6,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ChatMessage } from "@/lib/types";
 
 export function useChatWebSocket(roomId: number) {
-  const { token, user } = useUserStore();
+  const { user } = useUserStore();
   const queryClient = useQueryClient();
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    if (!token || !user || !roomId) return;
+    if (!user || !roomId) return;
 
-    const ws = new WebSocket(
-      `ws://localhost:8080/chat/${roomId}?token=${token}`
-    );
+    const ws = new WebSocket(`ws://localhost:8080/chat/${roomId}`);
     wsRef.current = ws;
 
     ws.onopen = () => console.log(`Connected to chat room ${roomId}`);
@@ -42,7 +40,7 @@ export function useChatWebSocket(roomId: number) {
         ws.close(1000, "Component unmounted");
       }
     };
-  }, [token, user, roomId, queryClient]);
+  }, [user, roomId, queryClient]);
 
   const sendMessage = (content: string) => {
     const ws = wsRef.current;

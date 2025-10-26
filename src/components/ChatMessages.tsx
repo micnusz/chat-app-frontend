@@ -30,7 +30,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
     >
       <div className="flex flex-col gap-y-1">
         {processedMessages.length === 0 && (
-          <div className="text-gray-500">No messages yet</div>
+          <div className="text-muted-foreground">No messages yet</div>
         )}
 
         {processedMessages.map((msg, idx) => {
@@ -57,7 +57,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
               };
 
           const bubbleClass = isSystem
-            ? "bg-transparent text-foreground italic text-xs"
+            ? "bg-transparent text-red-500 italic text-xs"
             : isMine
             ? "bg-primary text-foreground rounded-br-none"
             : "rounded-bl-none";

@@ -9,7 +9,7 @@ async function fetchAllChatRooms(): Promise<ChatRoom[]> {
 
 export function useChatList() {
   return useQuery<ChatRoom[]>({
-    queryKey: ["all-chat-rooms"],
+    queryKey: ["chat-room-list"],
     queryFn: fetchAllChatRooms,
   });
 }

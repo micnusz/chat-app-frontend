@@ -15,7 +15,6 @@ export type UserResponseDTO = {
 
 export type RegisterResponse = {
   user: UserResponseDTO;
-  token: string;
 };
 
 export type RegisterData = {
@@ -25,7 +24,6 @@ export type RegisterData = {
 
 export type LoginResponse = {
   user: UserResponseDTO;
-  token: string;
 };
 
 export type LoginData = {
@@ -63,5 +61,4 @@ export type ChatMessage = {
 
 export type AuthResponse = {
   user: UserResponseDTO;
-  token: string;
 };

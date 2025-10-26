@@ -1,16 +1,29 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { loginUser } from "@/lib/api";
 import { useUserStore } from "@/lib/stores/UserStore";
-import { LoginData, LoginResponse } from "../types";
+import api from "@/lib/apiClient";
+import { UserRequestDTO, UserResponseDTO, ErrorResponse } from "../types";
 
 export function useLoginUser() {
-  const setAuth = useUserStore((s) => s.setAuth);
+  const setUser = useUserStore((s) => s.setUser);
 
-  return useMutation<LoginResponse, AxiosError, LoginData>({
-    mutationFn: loginUser,
+  return useMutation<
+    UserResponseDTO,
+    AxiosError<ErrorResponse>,
+    UserRequestDTO
+  >({
+    mutationFn: async (payload) => {
+      const { data } = await api.post<UserResponseDTO>(
+        "api/users/login",
+        payload,
+        {
+          withCredentials: true,
+        }
+      );
+      return data;
+    },
     onSuccess: (data) => {
-      setAuth(data.user, data.token);
+      setUser(data);
     },
   });
 }

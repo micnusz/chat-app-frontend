@@ -11,14 +11,16 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import Spinner from "./Spinner";
 
 export default function ChatRoomList() {
   const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const { data: rooms, isLoading, error } = useChatList();
 
-  if (isLoading) return <p>Fetching list...</p>;
-  if (error) return <p>Error: {(error as Error).message}</p>;
+  if (isLoading) return <Spinner />;
+  if (error)
+    return <p className="text-red-500">Error: {(error as Error).message}</p>;
 
   const handleJoinClick = (room: ChatRoom) => {
     setSelectedRoom(room);

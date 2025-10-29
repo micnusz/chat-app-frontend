@@ -5,8 +5,7 @@ import Navbar from "@/components/Navbar";
 import QueryProvider from "@/lib/tanstack/QueryProvider";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import { fetchCurrentUser } from "@/lib/hooks/useFetchCurrentUser";
-import UserStoreProvider from "@/lib/UserStoreProvider";
+import { UserProvider } from "@/components/UserProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,13 +27,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await fetchCurrentUser();
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserStoreProvider initialUser={user}>
+        <UserProvider>
           <QueryProvider>
             <ThemeProvider
               attribute="class"
@@ -47,7 +45,7 @@ export default async function RootLayout({
               <Footer />
             </ThemeProvider>
           </QueryProvider>
-        </UserStoreProvider>
+        </UserProvider>
       </body>
     </html>
   );

@@ -32,8 +32,8 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserProvider>
-          <QueryProvider>
+        <QueryProvider>
+          <UserProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -44,8 +44,8 @@ export default async function RootLayout({
               {children}
               <Footer />
             </ThemeProvider>
-          </QueryProvider>
-        </UserProvider>
+          </UserProvider>
+        </QueryProvider>
       </body>
     </html>
   );

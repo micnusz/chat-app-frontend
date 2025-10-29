@@ -13,7 +13,13 @@ export function useChatWebSocket(roomId: number) {
   useEffect(() => {
     if (!user || !roomId) return;
 
-    const ws = new WebSocket(`ws://localhost:8080/chat/${roomId}`);
+    const WS_URL =
+      process.env.NODE_ENV === "production"
+        ? process.env.NEXT_PUBLIC_API_URL!.replace(/^https?/, "wss") + "chat"
+        : "ws://localhost:8080/chat";
+
+    const ws = new WebSocket(`${WS_URL}/${roomId}`);
+
     wsRef.current = ws;
 
     ws.onopen = () => console.log(`Connected to chat room ${roomId}`);

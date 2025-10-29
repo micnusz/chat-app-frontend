@@ -12,14 +12,24 @@ import {
 } from "./ui/dropdown-menu";
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
+import { useLogoutUser } from "@/lib/hooks/useLogoutUser";
 
 export default function Navbar() {
   const router = useRouter();
+  const logoutMutation = useLogoutUser();
   const { user, clearAuth } = useUserStore();
 
   const handleLogout = () => {
-    clearAuth();
-    router.push("/signin");
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        clearAuth();
+        router.push("/signin");
+      },
+      onError: () => {
+        clearAuth();
+        router.push("/signin");
+      },
+    });
   };
   const handleSignIn = () => {
     router.push("/signin");

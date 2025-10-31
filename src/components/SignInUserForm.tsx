@@ -72,7 +72,7 @@ export default function SignInUserForm() {
         {errorMessage && (
           <div className="text-red-500 text-sm">{errorMessage}</div>
         )}
-        <Button type="submit" disabled={isDisabled}>
+        <Button type="submit" disabled={isDisabled} className="text-foreground">
           {isPending ? (
             <>
               <Spinner aria-label="Signing in..." />

@@ -93,7 +93,7 @@ export default function ChatRoomList() {
             <Button
               variant={"destructive"}
               onClick={() => handleJoinClick(room)}
-              className="mt-3 sm:mt-0 ml-auto sm:ml-0"
+              className="mt-3 sm:mt-0 ml-auto sm:ml-0 text-foreground"
             >
               Join
             </Button>

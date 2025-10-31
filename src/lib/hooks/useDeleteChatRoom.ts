@@ -13,7 +13,7 @@ export function useDeleteChatRoom(roomId: number) {
       await api.delete(`/api/chat/rooms/${roomId}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["all-chat-rooms"] });
+      queryClient.invalidateQueries({ queryKey: ["chat-rooms-list"] });
       router.push("/chatrooms");
     },
   });

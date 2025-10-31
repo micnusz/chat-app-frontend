@@ -7,7 +7,7 @@ export default async function HomePage() {
   return (
     <div>
       <AnimatedBalls />
-      <HomePageClient />;
+      <HomePageClient />
     </div>
   );
 }

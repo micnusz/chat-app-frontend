@@ -93,7 +93,7 @@ export default function CreateRoomForm() {
           type="submit"
           disabled={isDisabled}
           variant={"default"}
-          className="disabled:opacity-50"
+          className="disabled:opacity-50 text-foreground"
         >
           {isPending ? "Creating..." : "Create Room"}
         </Button>

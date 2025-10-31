@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDeleteChatRoom } from "@/lib/hooks/useDeleteChatRoom";
 import { AxiosError } from "axios";
-import Spinner from "./Spinner"; // Twój komponent spinnera
+import Spinner from "./Spinner";
 
 type DeleteRoomDialogProps = {
   roomId: number;

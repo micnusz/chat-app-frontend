@@ -10,7 +10,9 @@ export default function HomePageClient() {
         <h1 className="text-3xl font-bold">Welcome to Chat App</h1>
         <p className="text-lg text-foreground">Jump into the conversation</p>
         <Link href="/chatrooms">
-          <Button variant="chart5">Go to Chatrooms</Button>
+          <Button variant="chart5" className="text-foreground">
+            Go to Chatrooms
+          </Button>
         </Link>
       </div>
 
@@ -18,7 +20,7 @@ export default function HomePageClient() {
         <div className="flex items-center flex-row gap-x-2">
           <span className="text-foreground">Already have an account?</span>
           <Link href="/signin">
-            <Button variant="default" size={"sm"}>
+            <Button variant="default" className="text-foreground" size={"sm"}>
               Sign In
             </Button>
           </Link>
@@ -26,7 +28,7 @@ export default function HomePageClient() {
         <div className="flex flex-row gap-x-2 items-center">
           <span className="text-foreground">New here?</span>
           <Link href="/signup">
-            <Button variant="secondary" size={"sm"}>
+            <Button variant="secondary" className="text-foreground" size={"sm"}>
               Register
             </Button>
           </Link>

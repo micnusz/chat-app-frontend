@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDeleteChatRoom } from "@/lib/hooks/useDeleteChatRoom";
 import { AxiosError } from "axios";
+import Spinner from "./Spinner"; // Twój komponent spinnera
 
 type DeleteRoomDialogProps = {
   roomId: number;
@@ -26,7 +27,7 @@ export default function DeleteRoomDialog({
   onDeleted,
 }: DeleteRoomDialogProps) {
   const [errorMessage, setErrorMessage] = useState("");
-  const { mutate: deleteRoom } = useDeleteChatRoom(roomId);
+  const { mutate: deleteRoom, isPending } = useDeleteChatRoom(roomId);
 
   const handleDelete = () => {
     setErrorMessage("");
@@ -61,11 +62,22 @@ export default function DeleteRoomDialog({
         )}
 
         <DialogFooter className="flex justify-end space-x-2 mt-4">
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" onClick={onClose} disabled={isPending}>
             Cancel
           </Button>
-          <Button variant="destructive" onClick={handleDelete}>
-            Delete
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isPending}
+          >
+            {isPending ? (
+              <>
+                <Spinner aria-label="Deleting..." />
+                <span className="sr-only">Deleting...</span>
+              </>
+            ) : (
+              "Delete"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

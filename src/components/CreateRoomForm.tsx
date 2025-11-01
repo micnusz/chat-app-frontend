@@ -63,12 +63,9 @@ export default function CreateRoomForm() {
   const isDisabled = isPending || name === "";
 
   return (
-    <div className="flex flex-col gap-y-2">
-      <h1>Create room:</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-2 w-full max-w-sm md:max-w-full"
-      >
+    <div className="flex flex-col gap-y-2 items-center">
+      <h1 className="text-xl">Create room:</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full">
         <Input
           type="text"
           placeholder="Room name"
@@ -98,7 +95,7 @@ export default function CreateRoomForm() {
           {isPending ? "Creating..." : "Create Room"}
         </Button>
 
-        {message && <p className="text-sm mt-1">{message}</p>}
+        {message && <p className="text-sm">{message}</p>}
 
         {isError && (
           <p className="text-red-500">

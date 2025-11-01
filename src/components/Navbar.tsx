@@ -36,13 +36,14 @@ export default function Navbar() {
   };
 
   return (
-    <div className="flex flex-row items-center justify-between h-16 p-4 bg-background border-b-2 px-4">
+    <div className="flex flex-row items-center justify-between h-[5rem] p-4 bg-background border-b-2 px-4">
       <Link href={"/"} className="transition duration-200 hover:text-primary">
         <div className="flex flex-row gap-x-1 items-center">
-          <span>
-            <MessagesSquare className="w-5 h-5 " />
-          </span>
-          <h1 className="font-bold">Chat App</h1>
+          <MessagesSquare />
+
+          <h1 className="scroll-m-20 text-2xl font-semibold  first:mt-0">
+            Chat App
+          </h1>
         </div>
       </Link>
 
@@ -64,7 +65,11 @@ export default function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="default" onClick={handleSignIn}>
+              <Button
+                variant="default"
+                onClick={handleSignIn}
+                className="text-foreground"
+              >
                 Sign in
               </Button>
             )}

@@ -32,7 +32,7 @@ export const ChatRoomsClient = () => {
   }
 
   return (
-    <div className="flex flex-col gap-y-12 px-4 py-4 w-full h-screen md:max-w-[40rem] mx-auto">
+    <div className="flex flex-col gap-y-6 p-6  w-full h-fit md:max-w-[60rem] mx-auto">
       <CreateRoomForm />
       <ChatRoomList />
     </div>

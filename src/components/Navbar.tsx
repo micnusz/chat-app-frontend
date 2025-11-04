@@ -36,14 +36,12 @@ export default function Navbar() {
   };
 
   return (
-    <div className="flex flex-row items-center justify-between h-[5rem] p-4 bg-background border-b-2 px-4">
+    <div className="px-fluid flex flex-row items-center justify-between h-[5rem] bg-background border-b-2">
       <Link href={"/"} className="transition duration-200 hover:text-primary">
         <div className="flex flex-row gap-x-1 items-center">
-          <MessagesSquare />
+          <MessagesSquare className="w-5 h-5" />
 
-          <h1 className="scroll-m-20 text-2xl font-semibold  first:mt-0">
-            Chat App
-          </h1>
+          <h1 className="responsive-h4 font-medium">Chat App</h1>
         </div>
       </Link>
 
@@ -53,7 +51,7 @@ export default function Navbar() {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className="flex flex-row gap-x-1">
-                  <Button variant="outline">
+                  <Button variant="outline" className="text-foreground">
                     <User />
                     <span className="font-medium">{user?.username}</span>
                   </Button>

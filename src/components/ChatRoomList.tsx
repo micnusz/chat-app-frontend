@@ -11,9 +11,9 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { SkeletonChatRoomList } from "./ui/Skeletons/SkeletonChatRoomList";
 import { ScrollArea } from "./ui/scroll-area";
 import { Input } from "./ui/input";
+import Spinner from "./Spinner";
 
 export default function ChatRoomList() {
   const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
@@ -22,7 +22,7 @@ export default function ChatRoomList() {
 
   const { data: rooms, isLoading, error } = useChatList();
 
-  if (isLoading) return <SkeletonChatRoomList count={3} />;
+  if (isLoading) return <Spinner />;
   if (error)
     return <p className="text-red-500">Error: {(error as Error).message}</p>;
 
@@ -40,34 +40,35 @@ export default function ChatRoomList() {
 
   return (
     <div className="flex flex-col gap-4">
-      {filteredRooms?.length ? (
-        <h2 className="text-xl font-semibold">Room List</h2>
-      ) : null}
-
-      <div className="flex gap-2">
-        <Input
-          type="text"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          placeholder="Search rooms..."
-          className=" max-w-md"
-        />
-        <Button
-          variant={filter.length === 0 ? "outline" : "destructive"}
-          className="text-foreground"
-          onClick={() => setFilter("")}
-          disabled={filter.length === 0}
-        >
-          Clear
-        </Button>
-      </div>
+      {rooms && rooms.length > 0 && (
+        <>
+          <h2 className="responsive-h4">Room List</h2>
+          <div className="flex gap-2">
+            <Input
+              type="text"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              placeholder="Search rooms..."
+              className=" max-w-md"
+            />
+            <Button
+              variant={filter.length === 0 ? "outline" : "destructive"}
+              className="text-foreground"
+              onClick={() => setFilter("")}
+              disabled={filter.length === 0}
+            >
+              Clear
+            </Button>
+          </div>
+        </>
+      )}
 
       <ScrollArea className="h-[32rem] rounded-md">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredRooms?.map((room) => (
             <div
               key={room.id}
-              className="flex flex-col justify-between p-4 border border-border rounded-xl hover:shadow-md transition-shadow duration-200 bg-background/60 dark:bg-input/30"
+              className="flex flex-col justify-between p-3 border border-border rounded-xl hover:shadow-md transition-shadow duration-200 bg-background/60 dark:bg-input/30"
             >
               <div className="flex flex-col gap-2 flex-1 min-w-0">
                 <HoverCard>

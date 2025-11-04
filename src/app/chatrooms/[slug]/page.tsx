@@ -14,9 +14,5 @@ export default async function ChatRoomPage({ params }: ChatRoomPageProps) {
   const roomId = parseInt(match[1], 10);
   if (isNaN(roomId)) return notFound();
 
-  return (
-    <div className="p-4 mt-4  h-screen">
-      <ChatRoom roomId={roomId} />
-    </div>
-  );
+  return <ChatRoom roomId={roomId} />;
 }

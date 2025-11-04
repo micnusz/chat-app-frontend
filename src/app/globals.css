@@ -167,29 +167,25 @@
 }
 
 .responsive-h1 {
-  font-weight: 800;
-  font-size: clamp(2rem, 6vw, 5rem); /* Zwiększona czcionka */
+  font-size: clamp(2rem, 6vw, 4rem); /* Zwiększona czcionka */
   letter-spacing: -0.025em;
   scroll-margin-top: 5rem;
 }
 
 .responsive-h2 {
   scroll-margin-top: 5rem;
-  font-weight: 600;
   letter-spacing: -0.025em;
   font-size: clamp(1.5rem, 4vw, 2rem); /* Zwiększona czcionka */
 }
 
 .responsive-h3 {
   scroll-margin-top: 5rem;
-  font-weight: 500; /* Regular weight for H3 */
   letter-spacing: -0.015em;
   font-size: clamp(1.25rem, 3vw, 1.5rem); /* Zwiększona czcionka */
 }
 
 .responsive-h4 {
   scroll-margin-top: 5rem;
-  font-weight: 500; /* Regular weight for H4 */
   letter-spacing: -0.01em;
   font-size: clamp(1rem, 3vw, 1.25rem); /* Zwiększona czcionka */
 }
@@ -198,8 +194,6 @@
   padding-inline: clamp(1rem, 2vw, 12rem);
   padding-block: clamp(1rem, 2vw, 12rem);
 }
-
-/* Dodatkowe klasy TailwindCSS */
 
 .text-large {
   font-size: clamp(1.75rem, 4vw, 3rem); /* Zwiększona czcionka */
@@ -212,14 +206,6 @@
 .text-xxlarge {
   font-size: clamp(2.5rem, 6vw, 4rem); /* Zwiększona czcionka */
 }
-
-/* Klasa dla typografii */
-
-.typography {
-  font-family: "Your Font Family", sans-serif; /* Zamień na Twoją preferowaną czcionkę */
-}
-
-/* Klasy dla konkretnych elementów typograficznych */
 
 .lead {
   font-size: 1.25rem;

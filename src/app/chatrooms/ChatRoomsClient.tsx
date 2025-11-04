@@ -11,8 +11,8 @@ import { SkeletonChatRoomList } from "@/components/ui/Skeletons/SkeletonChatRoom
 
 export const ChatRoomsClient = () => {
   const router = useRouter();
-  const { user } = useUserStore();
 
+  const { user } = useUserStore();
   const query = useCurrentUser();
   const isLoading = query.isLoading;
 
@@ -24,15 +24,14 @@ export const ChatRoomsClient = () => {
 
   if (isLoading || (!user && !query.isError)) {
     return (
-      <div className="flex flex-col gap-y-12 px-4 py-4 w-full h-screen md:max-w-[40rem] mx-auto">
+      <div className="flex flex-col gap-y-6 w-full h-screen md:max-w-[60rem] mx-auto">
         <SkeletonCreateRoomForm />
-        <SkeletonChatRoomList count={3} />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-y-6 p-6  w-full h-fit md:max-w-[60rem] mx-auto">
+    <div className="flex flex-col gap-y-6  w-full h-screen md:max-w-[60rem] mx-auto">
       <CreateRoomForm />
       <ChatRoomList />
     </div>

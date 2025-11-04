@@ -9,7 +9,10 @@ type SkeletonChatRoomListProps = {
 export function SkeletonChatRoomList({ count = 3 }: SkeletonChatRoomListProps) {
   return (
     <div className="space-y-3 w-full animate-pulse">
-      <Skeleton className="h-6 w-32 rounded " />
+      <div className="flex flex-row gap-x-2">
+        <Skeleton className="h-8 w-full rounded " />
+        <Skeleton className="h-8 w-20 rounded " />
+      </div>
 
       {Array.from({ length: count }).map((_, idx) => (
         <div

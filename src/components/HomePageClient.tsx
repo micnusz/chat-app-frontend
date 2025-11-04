@@ -5,12 +5,12 @@ import Link from "next/link";
 
 export default function HomePageClient() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center space-y-15">
-      <div className="flex flex-col items-center space-y-2">
-        <h1 className="scroll-m-20 border-b pb-2 text-4xl font-bold tracking-tight first:mt-0 text-foreground">
-          Welcome to Chat App
-        </h1>
-        <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight text-foreground">
+    <div className="py-fluid  flex flex-col items-center justify-center space-y-14">
+      <div className="flex flex-col items-center text-center space-y-2">
+        <h1 className="responsive-h1 text-foreground">Welcome to Chat App</h1>
+        <p>Chat with anyone, anywhere, for free.</p>
+        <div className="w-full h-50 bg-red-200">photo</div>
+        <h2 className="responsive-h2 text-foreground">
           Jump into the conversation
         </h2>
         <Link href="/chatrooms">

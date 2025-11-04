@@ -168,7 +168,7 @@
 
 .responsive-h1 {
   font-weight: 800;
-  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-size: clamp(2rem, 6vw, 5rem); /* Zwiększona czcionka */
   letter-spacing: -0.025em;
   scroll-margin-top: 5rem;
 }
@@ -177,12 +177,68 @@
   scroll-margin-top: 5rem;
   font-weight: 600;
   letter-spacing: -0.025em;
-  font-size: clamp(1rem, 4vw, 1.25rem);
+  font-size: clamp(1.5rem, 4vw, 2rem); /* Zwiększona czcionka */
+}
+
+.responsive-h3 {
+  scroll-margin-top: 5rem;
+  font-weight: 500; /* Regular weight for H3 */
+  letter-spacing: -0.015em;
+  font-size: clamp(1.25rem, 3vw, 1.5rem); /* Zwiększona czcionka */
+}
+
+.responsive-h4 {
+  scroll-margin-top: 5rem;
+  font-weight: 500; /* Regular weight for H4 */
+  letter-spacing: -0.01em;
+  font-size: clamp(1rem, 3vw, 1.25rem); /* Zwiększona czcionka */
 }
 
 .container-padding {
   padding-inline: clamp(1rem, 2vw, 12rem);
   padding-block: clamp(1rem, 2vw, 12rem);
+}
+
+/* Dodatkowe klasy TailwindCSS */
+
+.text-large {
+  font-size: clamp(1.75rem, 4vw, 3rem); /* Zwiększona czcionka */
+}
+
+.text-xlarge {
+  font-size: clamp(2rem, 5vw, 3.5rem); /* Zwiększona czcionka */
+}
+
+.text-xxlarge {
+  font-size: clamp(2.5rem, 6vw, 4rem); /* Zwiększona czcionka */
+}
+
+/* Klasa dla typografii */
+
+.typography {
+  font-family: "Your Font Family", sans-serif; /* Zamień na Twoją preferowaną czcionkę */
+}
+
+/* Klasy dla konkretnych elementów typograficznych */
+
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--muted-foreground);
+}
+
+.large {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.small {
+  font-size: 0.875rem;
+  font-weight: medium;
+}
+
+.muted {
+  color: var(--muted-foreground);
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -191,118 +247,4 @@
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-@keyframes move {
-  100% {
-    transform: translate3d(0, 0, 1px) rotate(360deg);
-  }
-}
-
-.background {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  inset: 0;
-  background: var(--background);
-  overflow: hidden;
-  z-index: -1;
-}
-
-.ball {
-  position: absolute;
-  width: 4vmin;
-  height: 4vmin;
-  border-radius: 40%;
-  backface-visibility: hidden;
-  animation: move linear infinite;
-}
-.ball:nth-child(1) {
-  color: var(--chart-1);
-}
-.ball:nth-child(2) {
-  color: var(--chart-2);
-}
-.ball:nth-child(3) {
-  color: var(--chart-3);
-}
-.ball:nth-child(4) {
-  color: var(--chart-4);
-}
-.ball:nth-child(5) {
-  color: var(--chart-1);
-}
-.ball:nth-child(6) {
-  color: var(--chart-2);
-}
-.ball:nth-child(7) {
-  color: var(--chart-3);
-}
-.ball:nth-child(8) {
-  color: var(--chart-4);
-}
-
-.ball:nth-child(1) {
-  top: 77%;
-  left: 88%;
-  animation-duration: 40s;
-  animation-delay: -3s;
-  transform-origin: 16vw -2vh;
-  box-shadow: 40vmin 0 5.7vmin currentColor;
-}
-.ball:nth-child(2) {
-  top: 42%;
-  left: 2%;
-  animation-duration: 53s;
-  animation-delay: -29s;
-  transform-origin: -19vw 21vh;
-  box-shadow: -40vmin 0 5.18vmin currentColor;
-}
-.ball:nth-child(3) {
-  top: 28%;
-  left: 18%;
-  animation-duration: 49s;
-  animation-delay: -8s;
-  transform-origin: -22vw 3vh;
-  box-shadow: 40vmin 0 5.25vmin currentColor;
-}
-.ball:nth-child(4) {
-  top: 50%;
-  left: 79%;
-  animation-duration: 26s;
-  animation-delay: -21s;
-  transform-origin: -17vw -6vh;
-  box-shadow: 40vmin 0 5.28vmin currentColor;
-}
-.ball:nth-child(5) {
-  top: 46%;
-  left: 15%;
-  animation-duration: 36s;
-  animation-delay: -40s;
-  transform-origin: 4vw 0vh;
-  box-shadow: -40vmin 0 5.96vmin currentColor;
-}
-.ball:nth-child(6) {
-  top: 77%;
-  left: 16%;
-  animation-duration: 31s;
-  animation-delay: -10s;
-  transform-origin: 18vw 4vh;
-  box-shadow: 40vmin 0 5.18vmin currentColor;
-}
-.ball:nth-child(7) {
-  top: 22%;
-  left: 17%;
-  animation-duration: 55s;
-  animation-delay: -6s;
-  transform-origin: 1vw -23vh;
-  box-shadow: -40vmin 0 5.7vmin currentColor;
-}
-.ball:nth-child(8) {
-  top: 41%;
-  left: 47%;
-  animation-duration: 43s;
-  animation-delay: -28s;
-  transform-origin: 25vw -3vh;
-  box-shadow: 40vmin 0 5.2vmin currentColor;
 }

@@ -14,19 +14,14 @@ export default function SkeletonChatRoom() {
 
         <div className="flex-1 overflow-y-auto border rounded-md p-2 max-h-[30rem]">
           <div className="flex flex-col gap-4">
-            {/* Short left 1 */}
             <div className="flex flex-col items-start gap-1">
               <Skeleton className="h-[1.5rem] w-24 rounded" />
               <Skeleton className="h-[1.5rem] w-2/5 rounded" />
             </div>
-
-            {/* Short left 2 */}
             <div className="flex flex-col items-start gap-1">
               <Skeleton className="h-6 w-20 rounded" />
               <Skeleton className="h-8 w-1/3 rounded" />
             </div>
-
-            {/* Long right */}
             <div className="flex flex-col items-end gap-1">
               <Skeleton className="h-[12rem] w-3/4 rounded" />
             </div>

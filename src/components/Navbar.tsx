@@ -36,7 +36,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="px-fluid flex flex-row items-center justify-between h-[5rem] bg-background border-b-2">
+    <div className="px-fluid flex flex-row items-center justify-between h-[4.5rem] bg-background border-b-2">
       <Link href={"/"} className="transition duration-200 hover:text-primary">
         <div className="flex flex-row gap-x-1 items-center">
           <MessagesSquare className="w-5 h-5" />

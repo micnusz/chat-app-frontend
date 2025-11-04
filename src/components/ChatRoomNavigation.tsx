@@ -63,7 +63,9 @@ export default function ChatRoomNavigation({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>More Options</DropdownMenuLabel>
+              <DropdownMenuLabel className="text-muted-foreground">
+                More Options
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => setConfirmOpen(true)}

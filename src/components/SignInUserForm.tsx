@@ -72,7 +72,11 @@ export default function SignInUserForm() {
         {errorMessage && (
           <div className="text-red-500 text-sm">{errorMessage}</div>
         )}
-        <Button type="submit" disabled={isDisabled} className="text-foreground">
+        <Button
+          type="submit"
+          disabled={isDisabled}
+          className="w-full flex items-center justify-center text-foreground"
+        >
           {isPending ? <Spinner aria-label="Signing in..." /> : "Sign in"}
         </Button>
       </form>

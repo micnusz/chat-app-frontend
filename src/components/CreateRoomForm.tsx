@@ -8,6 +8,7 @@ import { ChatRoom } from "@/lib/types";
 import { chatRoomSchema } from "@/lib/validation/chatRoomSchema";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import Spinner from "./Spinner";
 
 export default function CreateRoomForm() {
   const { user } = useUserStore();
@@ -93,7 +94,11 @@ export default function CreateRoomForm() {
             variant={isDisabled ? "outline" : "default"}
             className="disabled:opacity-50 text-foreground"
           >
-            {isPending ? "Creating..." : "Create Room"}
+            {isPending ? (
+              <Spinner aria-label="Creating room..." />
+            ) : (
+              "Create Room"
+            )}
           </Button>
 
           {message && <p className="text-sm">{message}</p>}

@@ -38,7 +38,7 @@ export default function HomePageClient() {
             Already have an account?
           </span>
           <Link href="/signin">
-            <Button variant="default" className="text-foreground" size={"sm"}>
+            <Button variant="chart5" className="text-foreground" size={"sm"}>
               Sign In
             </Button>
           </Link>
@@ -46,7 +46,7 @@ export default function HomePageClient() {
         <div className="flex flex-row gap-x-2 items-center">
           <span className="text-muted-foreground small">New here?</span>
           <Link href="/signup">
-            <Button variant="secondary" className="text-foreground" size={"sm"}>
+            <Button variant="chart4" className="text-foreground" size={"sm"}>
               Register
             </Button>
           </Link>

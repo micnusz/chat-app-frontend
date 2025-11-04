@@ -72,15 +72,12 @@ export default function SignUpUserForm() {
         {errorMessage && (
           <div className="text-red-500 text-sm">{errorMessage}</div>
         )}
-        <Button type="submit" disabled={isDisabled} className="text-foreground">
-          {isPending ? (
-            <>
-              <Spinner aria-label="Registering..." />
-              <span className="sr-only">Registering...</span>
-            </>
-          ) : (
-            "Register"
-          )}
+        <Button
+          type="submit"
+          disabled={isDisabled}
+          className="w-full flex items-center justify-center text-foreground"
+        >
+          {isPending ? <Spinner aria-label="Registering..." /> : "Register"}
         </Button>
       </form>
 

@@ -70,14 +70,7 @@ export default function DeleteRoomDialog({
             onClick={handleDelete}
             disabled={isPending}
           >
-            {isPending ? (
-              <>
-                <Spinner aria-label="Deleting..." />
-                <span className="sr-only">Deleting...</span>
-              </>
-            ) : (
-              "Delete"
-            )}
+            {isPending ? <Spinner aria-label="Deleting..." /> : "Delete"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -43,7 +43,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
             !prev ||
             prev.username !== msg.username ||
             prev.username === "System" ||
-            msg.time - prev.time > 60 * 1000; // >1min gap → new group
+            msg.time - prev.time > 60 * 1000;
 
           const base = "px-3 py-2 rounded-lg max-w-xs break-words text-sm";
 

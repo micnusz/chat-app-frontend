@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import MockChatPreview from "./MockChatPreview";
 
 export default function HomePageClient() {
   return (
@@ -15,7 +16,9 @@ export default function HomePageClient() {
         </h3>
       </div>
       <div>
-        <div className="w-full max-w-150 h-50 bg-red-200">photo</div>
+        <div>
+          <MockChatPreview />
+        </div>
       </div>
       <div className="flex flex-col gap-y-2 items-center text-center">
         <h2 className="responsive-h2 text-foreground">

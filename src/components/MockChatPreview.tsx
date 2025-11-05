@@ -18,7 +18,13 @@ const mockMessages = [
   },
   {
     username: "Jane",
-    content: "19 works perfectly for me. See you then.",
+    content: "19 works perfectly for me.",
+    timestamp: new Date("2025-02-04T16:38:00"),
+    mine: false,
+  },
+  {
+    username: "Jane",
+    content: "See you then!",
     timestamp: new Date("2025-02-04T16:38:00"),
     mine: false,
   },
@@ -33,7 +39,7 @@ const bubbleColors: Record<string, string> = {
 export default function MockChatHero() {
   return (
     <div
-      className="rounded-2xl bg-background shadow-sm p-4 w-full max-w-[40rem] 
+      className="rounded-2xl bg-background  p-4 w-full max-w-[40rem]
       xs:w-[95%]
       sm:w-[90%]
       md:w-[32rem]
@@ -51,6 +57,9 @@ export default function MockChatHero() {
                 hour12: false,
               });
 
+              const prev = idx > 0 ? mockMessages[idx - 1] : null;
+              const showHeader = !prev || prev.username !== msg.username;
+
               return (
                 <div
                   key={idx}
@@ -58,18 +67,20 @@ export default function MockChatHero() {
                     isMine ? "items-end" : "items-start"
                   }`}
                 >
-                  <div
-                    className={`flex flex-row items-center gap-1 text-xs text-muted-foreground mb-1 ${
-                      isMine ? "justify-end" : ""
-                    }`}
-                  >
-                    {!isMine && (
-                      <span className="font-semibold text-xs">
-                        {msg.username} -
-                      </span>
-                    )}
-                    <span>{time}</span>
-                  </div>
+                  {showHeader && (
+                    <div
+                      className={`flex flex-row items-center gap-1 text-xs text-muted-foreground mb-1 ${
+                        isMine ? "justify-end" : ""
+                      }`}
+                    >
+                      {!isMine && (
+                        <span className="font-semibold text-xs">
+                          {msg.username} -
+                        </span>
+                      )}
+                      <span>{time}</span>
+                    </div>
+                  )}
 
                   <div
                     className={`px-3 py-2 rounded-lg max-w-[80%] sm:max-w-[70%] md:max-w-[65%] break-words text-sm ${

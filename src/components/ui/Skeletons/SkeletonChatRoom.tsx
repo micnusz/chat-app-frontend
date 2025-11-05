@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function SkeletonChatRoom() {
   return (
     <div className="flex justify-center w-full animate-pulse">
-      <div className="flex flex-col w-full max-w-[40rem] gap-2 h-screen px-4 py-4">
+      <div className="flex flex-col w-full max-w-[40rem] gap-2 h-screen">
         <div className="flex flex-row gap-x-2 items-center">
           <Skeleton className="h-8 w-20 rounded-md" />
           <Skeleton className="h-8 w-12 rounded-md" />

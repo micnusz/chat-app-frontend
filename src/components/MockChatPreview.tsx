@@ -39,7 +39,7 @@ const bubbleColors: Record<string, string> = {
 export default function MockChatHero() {
   return (
     <div
-      className="rounded-2xl bg-background  p-4 w-full max-w-[40rem]
+      className="rounded-2xl bg-background w-full max-w-[40rem]
       xs:w-[95%]
       sm:w-[90%]
       md:w-[32rem]

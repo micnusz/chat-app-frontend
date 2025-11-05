@@ -160,77 +160,87 @@
 }
 
 .responsive-user {
-  width: clamp(8rem, 15vw, 20rem);
-  height: clamp(8rem, 15vw, 20rem);
+  width: clamp(6rem, 12vw, 12rem);
+  height: clamp(6rem, 12vw, 12rem);
   border-radius: 50%;
-  border: 6px solid var(--muted-foreground);
+  border: 4px solid var(--muted-foreground);
 }
 
+/* Headings scale smoothly; max-y wcześniej były zbyt agresywne */
 .responsive-h1 {
-  font-size: clamp(2rem, 6vw, 4rem); /* Zwiększona czcionka */
-  letter-spacing: -0.025em;
-  scroll-margin-top: 5rem;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.02em;
+  scroll-margin-top: 4rem;
 }
 
 .responsive-h2 {
-  scroll-margin-top: 5rem;
-  letter-spacing: -0.025em;
-  font-size: clamp(1.5rem, 4vw, 2rem); /* Zwiększona czcionka */
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  letter-spacing: -0.015em;
+  scroll-margin-top: 4rem;
 }
 
 .responsive-h3 {
-  scroll-margin-top: 5rem;
-  letter-spacing: -0.015em;
-  font-size: clamp(1.25rem, 3vw, 1.5rem); /* Zwiększona czcionka */
+  font-size: clamp(1.125rem, 2.2vw, 1.75rem);
+  letter-spacing: -0.01em;
+  scroll-margin-top: 3.5rem;
 }
 
 .responsive-h4 {
-  scroll-margin-top: 5rem;
-  letter-spacing: -0.01em;
-  font-size: clamp(1rem, 3vw, 1.25rem); /* Zwiększona czcionka */
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  letter-spacing: -0.005em;
+  scroll-margin-top: 3.5rem;
 }
 
+/* Padding logic tightened */
 .container-padding {
-  padding-inline: clamp(1rem, 2vw, 12rem);
-  padding-block: clamp(1rem, 2vw, 12rem);
+  padding-inline: clamp(1rem, 4vw, 6rem);
+  padding-block: clamp(1rem, 4vw, 6rem);
 }
 
+/* Text sizes aligned to scale, nie przesadzaj z max */
 .text-large {
-  font-size: clamp(1.75rem, 4vw, 3rem); /* Zwiększona czcionka */
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
 }
 
 .text-xlarge {
-  font-size: clamp(2rem, 5vw, 3.5rem); /* Zwiększona czcionka */
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
 .text-xxlarge {
-  font-size: clamp(2.5rem, 6vw, 4rem); /* Zwiększona czcionka */
+  font-size: clamp(2rem, 4vw, 3rem);
 }
 
+/* Support classes */
 .lead {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
   line-height: 1.75rem;
   color: var(--muted-foreground);
 }
 
 .large {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  font-weight: 600;
 }
 
 .small {
-  font-size: 0.875rem;
-  font-weight: medium;
+  font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+  font-weight: 500;
 }
 
 .muted {
   color: var(--muted-foreground);
 }
 
+/* No scrollbars */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.body-text {
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.6;
 }

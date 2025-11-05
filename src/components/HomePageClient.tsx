@@ -6,7 +6,7 @@ import MockChatPreview from "./MockChatPreview";
 
 export default function HomePageClient() {
   return (
-    <div className="px-fluid py-fluid w-full h-fit  flex flex-col items-center justify-center space-y-8">
+    <div className="px-fluid py-fluid w-full h-fit  flex flex-col items-center justify-center space-y-18">
       <div className="flex flex-col items-center text-center space-y-2 ">
         <h1 className="responsive-h1 text-foreground font-semibold">
           One platform for all your chats
@@ -27,12 +27,12 @@ export default function HomePageClient() {
       <div>
         <MockChatPreview />
       </div>
-      <div className="flex flex-col gap-y-2 items-center text-center">
-        <h3 className="responsive-h3 text-foreground font-light">
+      <div className="flex flex-col gap-y-2 items-center text-center p-2 rounded-2xl ">
+        <h3 className="responsive-h2 text-foreground font-light">
           Get started
         </h3>
-        <div className="flex items-center flex-row gap-x-1">
-          <span className="text-muted-foreground small">
+        <div className="flex flex-col items-center md:flex-row gap-x-1">
+          <span className="text-muted-foreground ">
             Already have an account?
           </span>
           <Link href="/signin">
@@ -41,8 +41,8 @@ export default function HomePageClient() {
             </Button>
           </Link>
         </div>
-        <div className="flex flex-row gap-x-1 items-center">
-          <span className="text-muted-foreground small">New here?</span>
+        <div className="flex flex-col md:flex-row gap-x-1 items-center">
+          <span className="text-muted-foreground ">New here?</span>
           <Link href="/signup">
             <Button variant="link" className="text-foreground" size={"sm"}>
               Register
@@ -50,6 +50,7 @@ export default function HomePageClient() {
           </Link>
         </div>
       </div>
+      <div></div>
     </div>
   );
 }

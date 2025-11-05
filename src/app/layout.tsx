@@ -29,7 +29,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${jakarta.className}  antialiased`}>
+      <body className={`${jakarta.className} antialiased`}>
         <QueryProvider>
           <UserProvider>
             <ThemeProvider

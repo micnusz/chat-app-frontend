@@ -8,9 +8,9 @@ export default function getUserColor(username: string) {
 
   const colors = [
     "oklch(0.4 0.0556 250)",
-    "oklch(0.42 0.05 95)",
+    "oklch(0.42 0.1135 351.53)",
     "oklch(0.38 0.045 150)",
-    "oklch(0.39 0.07 30)",
+    "oklch(0.4853 0.0839 210.71)",
     "oklch(0.43 0.03 312)",
     "oklch(0.77 0.07 150)",
     "oklch(0.73 0.08 20)",

@@ -18,7 +18,7 @@ export default function HomePageClient() {
           <Button
             size={"lg"}
             variant="default"
-            className="text-foreground w-[15rem] text-md"
+            className="text-foreground w-[15rem] text-md "
           >
             Go to Chatrooms
           </Button>
@@ -27,7 +27,7 @@ export default function HomePageClient() {
       <div>
         <MockChatPreview />
       </div>
-      <div className="flex flex-col gap-y-2 items-center text-center p-2 rounded-2xl ">
+      <div className="flex flex-col gap-y-2 items-center text-center rounded-2xl bg-card dark:bg-card ">
         <h3 className="responsive-h2 text-foreground font-light">
           Get started
         </h3>

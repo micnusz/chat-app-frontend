@@ -32,22 +32,27 @@ const mockMessages = [
 
 const bubbleColors: Record<string, string> = {
   Adam: "bg-chart-2 text-foreground",
-  Ja: "bg-primary text-foreground",
+  Ja: "bg-chart-4 text-foreground",
   Jane: "bg-chart-3 text-foreground",
 };
 
 export default function MockChatHero() {
   return (
     <div
-      className="rounded-2xl bg-background w-full max-w-[40rem]
-      xs:w-[95%]
-      sm:w-[90%]
-      md:w-[32rem]
-      lg:w-[38rem]
-      xl:w-[40rem]"
+      className="
+        rounded-2xl bg-background border
+        shadow-sm 
+        w-full max-w-[40rem] 
+        xs:w-[95%]
+        sm:w-[90%]
+        md:w-[32rem]
+        lg:w-[38rem]
+        xl:w-[40rem]
+        p-2
+      "
     >
-      <div className="flex flex-col gap-2 h-[70vh] max-h-[32rem]">
-        <div className="flex-1 overflow-y-auto rounded-md border p-2 max-h-[26rem] bg-background">
+      <div className="flex flex-col gap-2 h-[70vh] max-h-[32rem] p-4">
+        <div className="flex-1 overflow-y-auto rounded-md p-2 max-h-[26rem] border">
           <div className="flex flex-col gap-y-1">
             {mockMessages.map((msg, idx) => {
               const isMine = msg.mine;
@@ -95,11 +100,11 @@ export default function MockChatHero() {
           </div>
         </div>
 
-        <div className="flex gap-2 mt-2">
+        <div className="flex gap-2">
           <Input
             type="text"
             placeholder="Type a message"
-            className="flex-1 border rounded p-2"
+            className="flex-1 rounded p-2"
             disabled
           />
           <Button variant="outline" disabled>

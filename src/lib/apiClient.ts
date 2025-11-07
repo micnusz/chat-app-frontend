@@ -15,7 +15,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !error.config._retry) {
       error.config._retry = true;
       try {
-        await api.post("/api/users/refresh");
+        await api.post("/api/users/refresh", {}, { withCredentials: true });
         return api.request(error.config);
       } catch {
         clearAuth();

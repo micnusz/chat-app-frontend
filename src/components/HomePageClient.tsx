@@ -18,7 +18,7 @@ export default function HomePageClient() {
           <Button
             size={"lg"}
             variant="default"
-            className="text-foreground w-[15rem] text-md "
+            className="text-background w-[15rem] text-md bg-chart-3 hover:bg-chart-3/80"
           >
             Go to Chatrooms
           </Button>

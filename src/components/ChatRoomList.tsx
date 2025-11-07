@@ -39,7 +39,7 @@ export default function ChatRoomList() {
   );
 
   return (
-    <div className="flex flex-col flex-1 gap-2">
+    <div className="flex flex-col gap-2 min-h-[20rem]">
       {rooms && rooms.length > 0 && (
         <>
           <h2 className="responsive-h4 text-center">Room List:</h2>

@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Google_Sans_Code,
-  Plus_Jakarta_Sans,
-} from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import QueryProvider from "@/lib/tanstack/QueryProvider";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { UserProvider } from "@/components/UserProvider";
+import { getCurrentUserServer } from "@/lib/hooks/useCurrentUserServer";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -27,11 +23,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getCurrentUserServer();
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${jakarta.className} antialiased`}>
         <QueryProvider>
-          <UserProvider>
+          <UserProvider initialUser={user}>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"

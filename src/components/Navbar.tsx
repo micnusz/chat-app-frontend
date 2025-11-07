@@ -62,11 +62,7 @@ export default function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button
-                variant="default"
-                onClick={handleSignIn}
-                className="text-foreground"
-              >
+              <Button variant="default" onClick={handleSignIn}>
                 Sign in
               </Button>
             )}

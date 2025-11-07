@@ -3,7 +3,7 @@ import { UserResponseDTO } from "../types";
 
 interface UserStore {
   user: UserResponseDTO | null;
-  setUser: (user: UserResponseDTO) => void;
+  setUser: (user: UserResponseDTO | null) => void;
   clearAuth: () => void;
 }
 

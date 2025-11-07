@@ -37,10 +37,9 @@ export default function Navbar() {
 
   return (
     <div className="px-fluid flex flex-row items-center justify-between h-[4.5rem] bg-background border-b-2">
-      <Link href={"/"} className="transition duration-200 hover:text-primary">
+      <Link href={"/"} className="transition duration-200 hover:text-secondary">
         <div className="flex flex-row gap-x-1 items-center">
           <MessagesSquare className="w-5 h-5" />
-
           <h1 className="responsive-h4 font-medium">Chat App</h1>
         </div>
       </Link>

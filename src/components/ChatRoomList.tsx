@@ -42,7 +42,7 @@ export default function ChatRoomList() {
     <div className="flex flex-col gap-4">
       {rooms && rooms.length > 0 && (
         <>
-          <h2 className="responsive-h4">Room List</h2>
+          <h2 className="responsive-h4 text-center">Room List:</h2>
           <div className="flex gap-2">
             <Input
               type="text"
@@ -63,8 +63,8 @@ export default function ChatRoomList() {
         </>
       )}
 
-      <ScrollArea className="h-[32rem] rounded-md">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <ScrollArea className="h-[30rem] max-h-[30rem] rounded-md  p-4">
+        <div className="grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredRooms?.map((room) => (
             <div
               key={room.id}

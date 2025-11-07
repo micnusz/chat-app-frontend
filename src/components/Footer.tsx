@@ -18,19 +18,19 @@ export default function Footer() {
         <div className="flex flex-col gap-[1.2rem]">
           <p className="responsive-h4 text-muted-foreground">NAVIGATION</p>
           <ul className="flex flex-col gap-[0.75rem]">
-            <li className="flex items-center gap-[0.5rem] hover:text-chart-5 transition">
+            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition">
               <ArrowLeft className="text-muted-foreground" />
               <Link href="/chatrooms" className="body-text">
                 Chatrooms
               </Link>
             </li>
-            <li className="flex items-center gap-[0.5rem] hover:text-chart-5 transition">
+            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition">
               <ArrowLeft className="text-muted-foreground" />
               <Link href="/signin" className="body-text">
                 Sign In
               </Link>
             </li>
-            <li className="flex items-center gap-[0.5rem] hover:text-chart-5 transition">
+            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition">
               <ArrowLeft className="text-muted-foreground" />
               <Link href="/signup" className="body-text">
                 Sign Up
@@ -54,7 +54,7 @@ export default function Footer() {
                 href="https://github.com/micnusz"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-[0.35rem] text-foreground transition hover:text-chart-5 body-text"
+                className="flex items-center gap-[0.35rem] text-foreground transition hover:text-chart-4 body-text"
               >
                 <LinkIcon className="w-5 h-5" />
                 <span className="hover:underline body-text">Link</span>
@@ -66,7 +66,7 @@ export default function Footer() {
               <a
                 href="/Jan-Kowalski-Resume.pdf"
                 download
-                className="flex items-center gap-[0.35rem] text-foreground transition hover:text-chart-5 body-text"
+                className="flex items-center gap-[0.35rem] text-foreground transition hover:text-chart-4 body-text"
               >
                 <FileSymlink className="w-5 h-5" />
                 <span className="hover:underline body-text">Download</span>

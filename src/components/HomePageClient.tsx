@@ -6,7 +6,7 @@ import MockChatPreview from "./MockChatPreview";
 
 export default function HomePageClient() {
   return (
-    <div className="px-fluid py-fluid w-full h-fit  flex flex-col items-center justify-center space-y-18">
+    <div className="px-fluid py-fluid w-full h-fit  flex flex-col items-center justify-center space-y-12">
       <div className="flex flex-col items-center text-center space-y-2 ">
         <h1 className="responsive-h1 text-foreground font-semibold">
           One platform for all your chats

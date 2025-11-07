@@ -23,14 +23,14 @@ export const ChatRoomsClient = () => {
   }
 
   return (
-    <div className="py-fluid px-fluid flex flex-col gap-y-6 w-full h-screen md:max-w-[60rem] mx-auto">
+    <div className="py-fluid px-fluid w-full h-screen md:max-w-[60rem] mx-auto">
       {user ? (
-        <>
+        <div className="flex flex-col gap-y-12">
           <CreateRoomForm />
           <ChatRoomList />
-        </>
+        </div>
       ) : (
-        <div className="flex flex-col items-center text-center justify-center h-full gap-y-2">
+        <div className="flex flex-col items-center text-center justify-center h-screen gap-y-2">
           <h1 className="responsive-h3">
             To create a room, you must be logged in.
           </h1>

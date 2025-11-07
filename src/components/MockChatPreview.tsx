@@ -32,7 +32,7 @@ const mockMessages = [
 
 const bubbleColors: Record<string, string> = {
   Adam: "bg-chart-4 text-background",
-  Ja: "bg-primary text-background",
+  Ja: "bg-chart-2 text-background",
   Jane: "bg-chart-5 text-background",
 };
 

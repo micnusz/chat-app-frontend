@@ -62,8 +62,8 @@
   --secondary: oklch(0.7245 0.1926 39.23);
   --secondary-foreground: oklch(0.7545 0.1926 39.23);
 
-  --accent: var(--secondary);
-  --accent-foreground: var(--secondary-foreground);
+  --accent: var(--card);
+  --accent-foreground: var(--muted-foreground);
 
   --muted: oklch(0.2206 0.003 270);
   --muted-foreground: oklch(0.5206 0.003 270);

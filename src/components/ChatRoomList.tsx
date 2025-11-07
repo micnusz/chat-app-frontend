@@ -39,7 +39,7 @@ export default function ChatRoomList() {
   );
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col flex-1 gap-2">
       {rooms && rooms.length > 0 && (
         <>
           <h2 className="responsive-h4 text-center">Room List:</h2>
@@ -49,7 +49,7 @@ export default function ChatRoomList() {
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               placeholder="Search rooms..."
-              className=" max-w-md"
+              className="max-w-md"
             />
             <Button
               variant={filter.length === 0 ? "outline" : "destructive"}
@@ -62,9 +62,8 @@ export default function ChatRoomList() {
           </div>
         </>
       )}
-
-      <ScrollArea className="h-[30rem] max-h-[30rem] rounded-md  p-4">
-        <div className="grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <ScrollArea className="flex-1 max-h-[40rem] overflow-y-auto rounded-md p-4">
+        <div className="grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
           {filteredRooms?.map((room) => (
             <div
               key={room.id}

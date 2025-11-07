@@ -16,18 +16,19 @@ export const ChatRoomsClient = () => {
 
   if (isLoading || (!user && !query.isError)) {
     return (
-      <div className="py-fluid px-fluid flex flex-col gap-y-6 w-full h-screen md:max-w-[60rem] mx-auto">
+      <div className="py-fluid px-fluid flex flex-col w-full h-screen md:max-w-[60rem] mx-auto">
         <Spinner />
       </div>
     );
   }
 
   return (
-    <div className="py-fluid px-fluid w-full h-screen md:max-w-[60rem] mx-auto">
+    <div className="py-fluid px-fluid flex flex-col w-full md:max-w-[60rem] mx-auto">
       {user ? (
         <div className="flex flex-col gap-y-12">
           <CreateRoomForm />
           <ChatRoomList />
+          <div></div>
         </div>
       ) : (
         <div className="flex flex-col items-center text-center justify-center h-screen gap-y-2">
@@ -36,7 +37,7 @@ export const ChatRoomsClient = () => {
           </h1>
 
           <Button
-            size={"lg"}
+            size="lg"
             onClick={() => {
               router.push("/signin");
             }}

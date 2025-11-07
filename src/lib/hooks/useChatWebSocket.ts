@@ -13,17 +13,17 @@ export function useChatWebSocket(roomId: number) {
   useEffect(() => {
     if (!user || !roomId) return;
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-
+    // Bezpośredni backend dla WS
     const WS_URL =
       process.env.NODE_ENV === "production"
-        ? baseUrl.replace(/^https?/, "wss").replace(/\/$/, "")
-        : "ws://localhost:8080";
+        ? "wss://chat-app-backend-45zf.onrender.com/chat"
+        : "ws://localhost:8080/chat";
 
-    const ws = new WebSocket(`${WS_URL}/api/chat/${roomId}`);
+    const ws = new WebSocket(`${WS_URL}/${roomId}`);
     wsRef.current = ws;
 
     ws.onopen = () => console.log(`Connected to chat room ${roomId}`);
+
     ws.onmessage = (event) => {
       try {
         const msg: ChatMessage = JSON.parse(event.data);
@@ -35,6 +35,7 @@ export function useChatWebSocket(roomId: number) {
         console.error("Invalid WS message:", e);
       }
     };
+
     ws.onclose = () => console.log(`Disconnected from chat room ${roomId}`);
 
     return () => {

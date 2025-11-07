@@ -2,7 +2,6 @@ import axios from "axios";
 import { useUserStore } from "@/lib/stores/UserStore";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
@@ -15,7 +14,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !error.config._retry) {
       error.config._retry = true;
       try {
-        await api.post("/api/users/refresh", {}, { withCredentials: true });
+        await api.post("/api/users/refresh", {});
         return api.request(error.config);
       } catch {
         clearAuth();

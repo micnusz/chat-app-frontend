@@ -2,12 +2,12 @@
 
 import { ReactNode, useEffect } from "react";
 import { useUserStore } from "@/lib/stores/UserStore";
-import type { UserResponseDTO } from "@/lib/types";
+import { UserResponseDTO } from "@/lib/types";
 
-type UserProviderProps = {
+interface UserProviderProps {
   initialUser: UserResponseDTO | null;
   children: ReactNode;
-};
+}
 
 export function UserProvider({ initialUser, children }: UserProviderProps) {
   const setUser = useUserStore((s) => s.setUser);

@@ -1,10 +1,13 @@
 import { cookies } from "next/headers";
 
 export async function getCurrentUserServer() {
-  const cookie = cookies().toString();
+  const cookieStore = cookies();
+  const cookie = (await cookieStore).get("access_token")?.value;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/users/me`, {
-    headers: { Cookie: cookie },
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/me`, {
+    headers: {
+      Cookie: `access_token=${cookie}`,
+    },
     credentials: "include",
     cache: "no-store",
   });

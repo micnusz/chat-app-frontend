@@ -5,11 +5,7 @@ import { useUserStore } from "@/lib/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChatMessage } from "@/lib/types";
 
-interface UseChatWebSocketReturn {
-  sendMessage: (content: string) => void;
-}
-
-export function useChatWebSocket(roomId: number): UseChatWebSocketReturn {
+export function useChatWebSocket(roomId: number) {
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const wsRef = useRef<WebSocket | null>(null);
@@ -19,7 +15,7 @@ export function useChatWebSocket(roomId: number): UseChatWebSocketReturn {
 
     const WS_URL =
       process.env.NODE_ENV === "production"
-        ? "wss://chat-app-backend-45zf.onrender.com/chat"
+        ? `${process.env.NEXT_PUBLIC_APP_URL}/chat`
         : "ws://localhost:8080/chat";
 
     const ws = new WebSocket(`${WS_URL}/${roomId}`);
@@ -39,15 +35,11 @@ export function useChatWebSocket(roomId: number): UseChatWebSocketReturn {
       }
     };
 
-    ws.onclose = (event) => {
-      console.log(
-        `Disconnected from chat room ${roomId}. Code: ${event.code}, Reason: ${event.reason}`
-      );
+    ws.onerror = (e) => {
+      console.error(`WebSocket error in room ${roomId}:`, e);
     };
 
-    ws.onerror = (err) => {
-      console.error(`WebSocket error in room ${roomId}:`, err);
-    };
+    ws.onclose = () => console.log(`Disconnected from chat room ${roomId}`);
 
     return () => {
       if (

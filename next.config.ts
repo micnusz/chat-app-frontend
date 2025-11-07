@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         source: "/api/:path*",
         destination: "https://chat-app-backend-45zf.onrender.com/api/:path*",
       },
+      {
+        source: "/chat/:path*",
+        destination: "https://chat-app-backend-45zf.onrender.com/chat/:path*",
+      },
     ];
   },
 };

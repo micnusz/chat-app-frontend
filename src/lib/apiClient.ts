@@ -16,10 +16,11 @@ api.interceptors.response.use(
       error.config._retry = true;
       try {
         await api.post("/api/users/refresh");
-        return api(error.config);
+        return api.request(error.config);
       } catch {
         clearAuth();
         console.warn("Session expired. User logged out.");
+        return Promise.reject(error);
       }
     }
 

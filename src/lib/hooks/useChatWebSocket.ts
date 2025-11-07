@@ -15,14 +15,13 @@ export function useChatWebSocket(roomId: number) {
 
     const WS_URL =
       process.env.NODE_ENV === "production"
-        ? `${process.env.NEXT_PUBLIC_APP_URL}/chat`
+        ? "wss://chat-app-backend-45zf.onrender.com/chat"
         : "ws://localhost:8080/chat";
 
     const ws = new WebSocket(`${WS_URL}/${roomId}`);
     wsRef.current = ws;
 
     ws.onopen = () => console.log(`Connected to chat room ${roomId}`);
-
     ws.onmessage = (event) => {
       try {
         const msg: ChatMessage = JSON.parse(event.data);
@@ -34,11 +33,8 @@ export function useChatWebSocket(roomId: number) {
         console.error("Invalid WS message:", e);
       }
     };
-
-    ws.onerror = (e) => {
-      console.error(`WebSocket error in room ${roomId}:`, e);
-    };
-
+    ws.onerror = (err) =>
+      console.error(`WebSocket error in room ${roomId}:`, err);
     ws.onclose = () => console.log(`Disconnected from chat room ${roomId}`);
 
     return () => {

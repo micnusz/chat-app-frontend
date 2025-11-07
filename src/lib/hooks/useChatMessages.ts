@@ -13,7 +13,7 @@ export function useChatMessages(roomId: number) {
     queryFn: async () => {
       if (!user) throw new Error("User not authenticated");
       const res = await api.get<ChatMessage[]>(
-        `api/chat/rooms/${roomId}/messages`
+        `/api/chat/rooms/${roomId}/messages`
       );
       return res.data;
     },

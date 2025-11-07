@@ -13,7 +13,7 @@ export function useLeaveRoom(roomId: number) {
       await api.post(`/api/chat/rooms/${roomId}/leave`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["all-chat-rooms"] });
+      queryClient.invalidateQueries({ queryKey: ["chat-room-list"] });
       router.push("/chatrooms");
     },
   });

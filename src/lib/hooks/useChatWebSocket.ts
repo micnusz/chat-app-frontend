@@ -5,6 +5,12 @@ import { useUserStore } from "@/lib/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChatMessage } from "@/lib/types";
 
+interface OutgoingMessage {
+  content: string;
+  roomId: number;
+  username: string;
+}
+
 export function useChatWebSocket(roomId: number) {
   const { user } = useUserStore();
   const queryClient = useQueryClient();
@@ -13,12 +19,13 @@ export function useChatWebSocket(roomId: number) {
   useEffect(() => {
     if (!user || !roomId) return;
 
-    const WS_URL =
+    const baseUrl =
       process.env.NODE_ENV === "production"
-        ? process.env.NEXT_PUBLIC_API_URL!.replace(/^https?/, "wss") + "chat"
-        : "ws://localhost:8080/chat";
-
-    const ws = new WebSocket(`${WS_URL}/${roomId}`);
+        ? process.env
+            .NEXT_PUBLIC_API_URL!.replace(/^http/, "ws")
+            .replace(/\/$/, "")
+        : "ws://localhost:8080";
+    const ws = new WebSocket(`${baseUrl}/chat/${roomId}`);
 
     wsRef.current = ws;
 
@@ -27,6 +34,7 @@ export function useChatWebSocket(roomId: number) {
     ws.onmessage = (event) => {
       try {
         const msg: ChatMessage = JSON.parse(event.data);
+        if (!msg.id || !msg.content) return;
         queryClient.setQueryData<ChatMessage[]>(
           ["chat-messages", roomId],
           (old = []) => [...old, msg]
@@ -36,7 +44,12 @@ export function useChatWebSocket(roomId: number) {
       }
     };
 
-    ws.onclose = () => console.log(`Disconnected from chat room ${roomId}`);
+    ws.onclose = () => {
+      console.log(`Disconnected from chat room ${roomId}`);
+      wsRef.current = null;
+    };
+
+    ws.onerror = (err) => console.error("WebSocket error:", err);
 
     return () => {
       if (
@@ -51,16 +64,24 @@ export function useChatWebSocket(roomId: number) {
   const sendMessage = (content: string) => {
     const ws = wsRef.current;
     if (ws?.readyState === WebSocket.OPEN && user) {
-      const payload: Partial<ChatMessage> = {
+      const payload: OutgoingMessage = {
         username: user.username,
         content,
         roomId,
       };
       ws.send(JSON.stringify(payload));
 
+      // Optymistyczne dodanie wiadomości do cache
       queryClient.setQueryData<ChatMessage[]>(
         ["chat-messages", roomId],
-        (old = []) => [...old, payload as ChatMessage]
+        (old = []) => [
+          ...old,
+          {
+            ...payload,
+            id: Date.now(),
+            timestamp: new Date().toISOString(),
+          },
+        ]
       );
     }
   };

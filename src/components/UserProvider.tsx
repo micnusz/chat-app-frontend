@@ -18,5 +18,5 @@ export function UserProvider({ initialUser, children }: UserProviderProps) {
     }
   }, [initialUser, setUser]);
 
-  return { children };
+  return <>{children}</>;
 }

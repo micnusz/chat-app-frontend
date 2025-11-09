@@ -13,15 +13,16 @@ export function useChatWebSocket(roomId: number) {
   useEffect(() => {
     if (!user || !roomId) return;
 
-    const WS_URL =
+    const WS_BASE =
       process.env.NODE_ENV === "production"
-        ? "wss://chat-app-backend-45zf.onrender.com/chat"
+        ? "wss://chatapi.micnusz.xyz/chat"
         : "ws://localhost:8080/chat";
 
-    const ws = new WebSocket(`${WS_URL}/${roomId}`);
+    const ws = new WebSocket(`${WS_BASE}/${roomId}`);
     wsRef.current = ws;
 
-    ws.onopen = () => console.log(`Connected to chat room ${roomId}`);
+    ws.onopen = () => console.log(`WS connected: room ${roomId}`);
+
     ws.onmessage = (event) => {
       try {
         const msg: ChatMessage = JSON.parse(event.data);
@@ -29,20 +30,20 @@ export function useChatWebSocket(roomId: number) {
           ["chat-messages", roomId],
           (old = []) => [...old, msg]
         );
-      } catch (e) {
-        console.error("Invalid WS message:", e);
+      } catch (err) {
+        console.error("Bad WS message:", err);
       }
     };
-    ws.onerror = (err) =>
-      console.error(`WebSocket error in room ${roomId}:`, err);
-    ws.onclose = () => console.log(`Disconnected from chat room ${roomId}`);
+
+    ws.onerror = (e) => console.error(`WS error room ${roomId}:`, e);
+    ws.onclose = () => console.log(`WS closed room ${roomId}`);
 
     return () => {
       if (
         ws.readyState === WebSocket.OPEN ||
         ws.readyState === WebSocket.CONNECTING
       ) {
-        ws.close(1000, "Component unmounted");
+        ws.close(1000, "unmount");
       }
     };
   }, [user, roomId, queryClient]);

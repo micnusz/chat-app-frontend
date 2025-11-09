@@ -9,10 +9,8 @@ export async function getCurrentUserServer(): Promise<UserResponseDTO | null> {
     .map((c) => `${c.name}=${c.value}`)
     .join("; ");
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users/me`, {
-    headers: {
-      Cookie: cookieHeader,
-    },
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/me`, {
+    headers: { Cookie: cookieHeader },
     cache: "no-store",
   });
 

@@ -1,4 +1,3 @@
-// lib/get-query-client.ts
 import { QueryClient } from "@tanstack/react-query";
 
 function makeQueryClient() {

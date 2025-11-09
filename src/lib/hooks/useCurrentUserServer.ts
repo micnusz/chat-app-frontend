@@ -12,6 +12,7 @@ export async function getCurrentUserServer(): Promise<UserResponseDTO | null> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/me`, {
     headers: { Cookie: cookieHeader },
     cache: "no-store",
+    credentials: "include",
   });
 
   if (!res.ok) return null;

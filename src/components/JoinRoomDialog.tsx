@@ -50,9 +50,15 @@ export default function JoinRoomDialog({ room }: JoinRoomDialogProps) {
     });
   };
 
+  const isDisabled = room.requiresPassword && password.trim() === "";
+
   return (
     <>
-      <Button onClick={() => setDialogOpen(true)} variant={"default"}>
+      <Button
+        onClick={() => setDialogOpen(true)}
+        variant={"default"}
+        className="w-fit"
+      >
         Join
       </Button>
 
@@ -80,7 +86,11 @@ export default function JoinRoomDialog({ room }: JoinRoomDialogProps) {
           )}
 
           <DialogFooter>
-            <Button onClick={handleJoin} variant={"default"}>
+            <Button
+              onClick={handleJoin}
+              variant={isDisabled ? "muted" : "default"}
+              disabled={isDisabled}
+            >
               Join
             </Button>
           </DialogFooter>

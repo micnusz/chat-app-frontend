@@ -20,12 +20,16 @@ export default function ChatRoomListDetails({
   room,
 }: ChatRoomListDetailsProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const resetState = () => {
+    setDialogOpen(false);
+  };
   return (
     <>
       <Button onClick={() => setDialogOpen(true)} variant={"outline"}>
-        More info
+        More
       </Button>
-      <Dialog open={dialogOpen}>
+      <Dialog open={dialogOpen} onOpenChange={resetState}>
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
             <DialogTitle>{room.name}</DialogTitle>

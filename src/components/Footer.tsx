@@ -18,19 +18,19 @@ export default function Footer() {
         <div className="flex flex-col gap-[1.2rem]">
           <p className="responsive-h4 text-muted-foreground">NAVIGATION</p>
           <ul className="flex flex-col gap-[0.75rem]">
-            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition">
+            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition w-fit">
               <ArrowLeft className="text-muted-foreground" />
               <Link href="/chatrooms" className="body-text">
                 Chatrooms
               </Link>
             </li>
-            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition">
+            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition w-fit">
               <ArrowLeft className="text-muted-foreground" />
               <Link href="/signin" className="body-text">
                 Sign In
               </Link>
             </li>
-            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition">
+            <li className="flex items-center gap-[0.5rem] hover:text-chart-3 transition w-fit">
               <ArrowLeft className="text-muted-foreground" />
               <Link href="/signup" className="body-text">
                 Sign Up

@@ -12,6 +12,6 @@ export function useGetChatRoomInfo(roomId: number) {
       return res.data;
     },
     enabled: !!roomId,
-    staleTime: 1000 * 30, // 30s
+    staleTime: 1000 * 30,
   });
 }

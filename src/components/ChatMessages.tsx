@@ -59,7 +59,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
           const bubbleClass = isSystem
             ? "bg-transparent text-red-500 italic text-xs"
             : isMine
-            ? "bg-primary text-foreground rounded-br-none"
+            ? "bg-primary text-background rounded-br-none"
             : "rounded-bl-none";
 
           return (

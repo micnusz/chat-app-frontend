@@ -22,7 +22,6 @@ export const ChatRoomsClient = () => {
           onClick={() => {
             router.push("/signin");
           }}
-          className="text-foreground"
         >
           Sign In
         </Button>

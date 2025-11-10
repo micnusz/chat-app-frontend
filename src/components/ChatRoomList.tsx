@@ -1,45 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import JoinRoomDialog from "./JoinRoomDialog";
+import { useState, useMemo } from "react";
 import { useChatList } from "@/lib/hooks/useChatList";
-import { Button } from "./ui/button";
 import { ChatRoom } from "@/lib/types";
+import { Button } from "./ui/button";
+import { ScrollArea } from "./ui/scroll-area";
+import { Input } from "./ui/input";
+import Spinner from "./Spinner";
 import { Calendar, Lock, User } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { ScrollArea } from "./ui/scroll-area";
-import { Input } from "./ui/input";
-import Spinner from "./Spinner";
+import JoinRoomDialog from "./JoinRoomDialog";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import ChatRoomListDetails from "./ChatRoomListDetails";
 
 export default function ChatRoomList() {
-  const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [filter, setFilter] = useState("");
-
   const { data: rooms, isLoading, error } = useChatList();
 
+  const filteredRooms = useMemo(
+    () =>
+      rooms?.filter((r) => r.name.toLowerCase().includes(filter.toLowerCase())),
+    [rooms, filter]
+  );
   if (isLoading) return <Spinner />;
   if (error)
     return <p className="text-red-500">Error: {(error as Error).message}</p>;
 
-  const handleJoinClick = (room: ChatRoom) => {
-    setSelectedRoom(room);
-    setDialogOpen(true);
-  };
-
   const truncateName = (name: string, maxLength = 30) =>
     name.length > maxLength ? name.slice(0, maxLength) + "…" : name;
 
-  const filteredRooms = rooms?.filter((r) =>
-    r.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
   return (
-    <div className="flex flex-col gap-2 min-h-[20rem]">
+    <div className="flex flex-col gap-2 min-h-[30rem]">
       {rooms && rooms.length > 0 && (
         <>
           <h2 className="responsive-h4 text-center">Room List:</h2>
@@ -62,72 +63,40 @@ export default function ChatRoomList() {
           </div>
         </>
       )}
+
       <ScrollArea className="flex-1 max-h-[40rem] overflow-y-auto rounded-md p-4">
         <div className="grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
           {filteredRooms?.map((room) => (
-            <div
-              key={room.id}
-              className="flex flex-col justify-between p-3 border border-border rounded-xl hover:shadow-md transition-shadow duration-200 bg-background/60 dark:bg-input/30"
-            >
-              <div className="flex flex-col gap-2 flex-1 min-w-0">
-                <HoverCard>
-                  <HoverCardTrigger className="flex items-center gap-2 min-w-0">
-                    <User className="w-4 h-4 text-muted-foreground" />
-                    <span className="font-medium text-foreground truncate">
-                      {truncateName(room.name)}
-                    </span>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="text-sm max-w-xs">
-                    Room name: {room.name}
-                  </HoverCardContent>
-                </HoverCard>
+            <div key={room.id}>
+              <Card className="bg-background/70 dark:bg-input/40 border border-border rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col justify-between">
+                <CardHeader className="flex justify-between items-start">
+                  <CardTitle className="font-bold text-foreground truncate max-w-[70%]">
+                    <HoverCard>
+                      <HoverCardTrigger>
+                        {truncateName(room.name)}
+                      </HoverCardTrigger>
+                      <HoverCardContent>{room.name}</HoverCardContent>
+                    </HoverCard>
+                  </CardTitle>
+                  {room.requiresPassword && (
+                    <div className="flex items-center gap-2">
+                      <HoverCard>
+                        <HoverCardTrigger>
+                          <Lock className="w-4 h-4 text-destructive" />
+                        </HoverCardTrigger>
+                        <HoverCardContent>
+                          This room requires a password to join.
+                        </HoverCardContent>
+                      </HoverCard>
+                    </div>
+                  )}
+                </CardHeader>
 
-                <HoverCard>
-                  <HoverCardTrigger className="flex items-center gap-2 min-w-0">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">
-                      {room.createdAt
-                        ? new Date(room.createdAt).toLocaleDateString()
-                        : "Unknown"}
-                    </span>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="text-sm max-w-xs">
-                    Created at:{" "}
-                    {room.createdAt
-                      ? new Date(room.createdAt).toLocaleDateString()
-                      : "Unknown"}
-                  </HoverCardContent>
-                </HoverCard>
-
-                {room.requiresPassword && (
-                  <HoverCard>
-                    <HoverCardTrigger className="flex items-center gap-2">
-                      <Lock className="w-4 h-4 text-chart-2" />
-                      <span className="text-sm text-chart-2">Protected</span>
-                    </HoverCardTrigger>
-                    <HoverCardContent className="text-sm">
-                      This room requires a password to join.
-                    </HoverCardContent>
-                  </HoverCard>
-                )}
-              </div>
-
-              <JoinRoomDialog
-                room={room}
-                open={selectedRoom?.id === room.id && dialogOpen}
-                onClose={() => {
-                  setDialogOpen(false);
-                  setSelectedRoom(null);
-                }}
-              >
-                <Button
-                  variant="destructive"
-                  className="mt-3 text-foreground"
-                  onClick={() => handleJoinClick(room)}
-                >
-                  Join
-                </Button>
-              </JoinRoomDialog>
+                <CardFooter className="mt-2 flex flex-row gap-x-2">
+                  <JoinRoomDialog room={room} />
+                  <ChatRoomListDetails room={room} />
+                </CardFooter>
+              </Card>
             </div>
           ))}
 

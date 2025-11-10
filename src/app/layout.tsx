@@ -26,7 +26,7 @@ export default async function RootLayout({
   const user = await getCurrentUserServer();
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${jakarta.className} antialiased`}>
+      <body className={`${jakarta.className} antialiased bg-background`}>
         <QueryProvider>
           <UserProvider initialUser={user}>
             <ThemeProvider

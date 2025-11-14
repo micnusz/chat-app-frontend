@@ -92,7 +92,7 @@ export default function CreateRoomForm() {
             type="submit"
             disabled={isDisabled}
             variant={isDisabled ? "outline" : "default"}
-            className="disabled:opacity-50 text-foreground"
+            className="disabled:opacity-50 "
           >
             {isPending ? (
               <Spinner aria-label="Creating room..." />

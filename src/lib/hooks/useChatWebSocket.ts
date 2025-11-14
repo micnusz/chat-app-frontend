@@ -4,11 +4,13 @@ import { useEffect, useRef } from "react";
 import { useUserStore } from "@/lib/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChatMessage } from "@/lib/types";
+import { useRouter } from "next/router";
 
 export function useChatWebSocket(roomId: number) {
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const wsRef = useRef<WebSocket | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!user || !roomId) return;
@@ -25,7 +27,14 @@ export function useChatWebSocket(roomId: number) {
 
     ws.onmessage = (event) => {
       try {
-        const msg: ChatMessage = JSON.parse(event.data);
+        const msg: ChatMessage & { error?: string } = JSON.parse(event.data);
+
+        if (msg.error === "Room has been deleted") {
+          ws.close(1000, msg.error);
+          router.push("/chatrooms");
+          return;
+        }
+
         queryClient.setQueryData<ChatMessage[]>(
           ["chat-messages", roomId],
           (old = []) => [...old, msg]
@@ -36,7 +45,9 @@ export function useChatWebSocket(roomId: number) {
     };
 
     ws.onerror = (e) => console.error(`WS error room ${roomId}:`, e);
-    ws.onclose = () => console.log(`WS closed room ${roomId}`);
+
+    ws.onclose = (event) =>
+      console.log(`WS closed room ${roomId}:`, event.reason);
 
     return () => {
       if (

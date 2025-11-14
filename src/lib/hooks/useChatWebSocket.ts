@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useUserStore } from "@/lib/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChatMessage } from "@/lib/types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export function useChatWebSocket(roomId: number) {
   const { user } = useUserStore();

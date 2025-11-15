@@ -2,30 +2,29 @@
 
 import { useState, useMemo } from "react";
 import { useChatList } from "@/lib/hooks/useChatList";
-import { ChatRoom } from "@/lib/types";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { Input } from "./ui/input";
 import Spinner from "./Spinner";
-import { Calendar, Lock, User } from "lucide-react";
+import { LoaderCircle, Lock } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import JoinRoomDialog from "./JoinRoomDialog";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import ChatRoomListDetails from "./ChatRoomListDetails";
 
 export default function ChatRoomList() {
   const [filter, setFilter] = useState("");
-  const { data: rooms, isLoading, error } = useChatList();
+  const {
+    data: rooms,
+    isLoading,
+    isRefetching,
+    error,
+    refetch,
+  } = useChatList();
 
   const filteredRooms = useMemo(
     () =>
@@ -43,7 +42,16 @@ export default function ChatRoomList() {
     <div className="flex flex-col gap-2 min-h-[30rem]">
       {rooms && rooms.length > 0 && (
         <>
-          <h2 className="responsive-h4 text-center">Room List:</h2>
+          <div className="flex flex-row items-center justify-between">
+            <h2 className="responsive-h4">Room List:</h2>
+            <Button variant={"outline"} size={"sm"} onClick={() => refetch()}>
+              {isRefetching ? (
+                <Spinner aria-label="Refreshing..." />
+              ) : (
+                <LoaderCircle aria-label="Refresh" />
+              )}
+            </Button>
+          </div>
           <div className="flex gap-2">
             <Input
               type="text"

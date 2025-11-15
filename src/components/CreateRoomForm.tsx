@@ -65,7 +65,7 @@ export default function CreateRoomForm() {
 
   return (
     <>
-      <div className="flex flex-col gap-y-2 items-center justify-center">
+      <div className="flex flex-col gap-y-2 justify-center">
         <h1 className="responsive-h4">Create room:</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full">
           <Input

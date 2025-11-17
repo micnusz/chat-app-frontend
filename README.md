@@ -6,7 +6,7 @@ A secure real-time chat application with private chat rooms, server-side AES-256
 
 https://chatapp.micnusz.xyz
 
-![Chat App Screenshot](./screenshots/1.png)
+![Chat App Screenshot](/screenshots/1.png)
 
 ## Features
 

@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chat App
 
-## Getting Started
+A secure real-time chat application with private chat rooms, server-side AES-256-GCM message encryption, and JWT-based authentication. Built as an independent programming project to practice full-stack development, security, and real-time communication.
 
-First, run the development server:
+## Live Demo
+
+https://chatapp.micnusz.xyz
+
+![Chat App Screenshot](./screenshots/1.png)
+
+## Features
+
+- Private chat rooms with isolated communication
+- Real-time messaging via WebSockets
+- Server-side AES-256-GCM encryption of messages
+- JWT authentication stored in HTTP-only cookies
+- Login and registration rate-limiting
+- Client-side state management using React Query & Zustand
+- Unit tests for core authentication and messaging logic
+
+## Tech Stack
+
+- **Frontend:** TypeScript, React, Next.js
+- **Backend:** Java, Spring Boot, WebSocket API, REST API ([backend repo](https://github.com/micnusz/chat-app-backend))
+- **Hosting:** AWS with basic NGINX configuration
+- **Security:** AES-256-GCM encryption, JWT, HTTP-only cookies
+- **Testing:** JUnit
+
+### Prerequisites
+
+- Node.js (v18+)
+- Java (JDK 17+)
+- Maven
+
+### Installation
+
+1. Clone both repositories:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/micnusz/chat-app-frontend.git
+git clone https://github.com/micnusz/chat-app-backend.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Configure backend environment variables (AES secret, JWT secret).
+3. Start backend:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd chat-app-backend
+./mvnw spring-boot:run
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Start frontend:
 
-## Learn More
+```bash
+cd chat-app-frontend
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+5. Open your browser at `http://localhost:3000`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Testing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Backend unit tests with JUnit:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+cd chat-app-backend
+./mvnw test
+```

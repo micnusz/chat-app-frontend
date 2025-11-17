@@ -26,6 +26,10 @@ https://chatapp.micnusz.xyz
 - **Security:** AES-256-GCM encryption, JWT, HTTP-only cookies
 - **Testing:** JUnit
 
+![Chat App Screenshot](/screenshots/2.png)
+
+![Chat App Screenshot](/screenshots/3.png)
+
 ### Prerequisites
 
 - Node.js (v18+)

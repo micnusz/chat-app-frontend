@@ -93,7 +93,7 @@ export default function Footer() {
             <li className="flex items-center gap-[0.5rem] text-muted-foreground body-text">
               Github (Front-end):
               <a
-                href="https://github.com/micnusz/chat-app-backend"
+                href="https://github.com/micnusz/chat-app-frontend"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-[0.35rem] text-foreground transition hover:text-chart-4 body-text"

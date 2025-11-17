@@ -1,4 +1,4 @@
-# Chat App
+# Chat App Front-end
 
 A secure real-time chat application with private chat rooms, server-side AES-256-GCM message encryption, and JWT-based authentication. Built as an independent programming project to practice full-stack development, security, and real-time communication.
 

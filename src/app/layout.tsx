@@ -14,7 +14,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "ChatApp",
+  title: "Chat App - Text with anyone, anywhere.",
   description: "App created by Michał Nuszkiewicz as a portfolio project.",
 };
 
